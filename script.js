@@ -1,7 +1,4 @@
-
-
 //ECMA6
-
 class Producto {
     constructor(nombreProdcto, precioProducto, stockProducto){ 
             this.nombre = nombreProdcto;
