@@ -38,21 +38,9 @@ class Producto {
 
     }
 }
-
-
-
-
-
-
 class claseHijo extends clasePadre(){
 
-}
-
-    
-
-   
-    
-    
+} 
     
         let productoUno = new Producto ("BurguerCompleta", 600, 70);
         let productoDos = new Producto ("bebida", 150, 60);

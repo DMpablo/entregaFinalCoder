@@ -1,61 +1,43 @@
 //ECMA6
+let totalCarrito = []; 
+
 class Producto {
-    constructor(nombreProdcto, precioProducto, stockProducto){ 
+    constructor(nombreProdcto, precioProducto, condimentosProducto, imagenProducto, stockProductos ){ 
             this.nombre = nombreProdcto;
             this.precio = precioProducto;
-            this.stock = stockProducto;
-            this.mostrarProducto = function (){
-                    document.getElementById('carrito').innerHTML = `
-                    <div>
-                    <h2>${this.nombre}</h2>
-                    <p>${this.precio}</p>
-                    <p>${this.stock}</p>
-                    </div>
-                    `;}}
-                        
-                }
+            this.condimentos = condimentosProducto;
+            this.imagen = imagenProducto;
+            this.stock = stockProductos;
+            }
+}
 
- let productoUno = new Producto ("BurguerCompleta", 600, 70);
- let productoDos = new Producto ("bebida", 150, 60);
- let productoTres = new Producto ("postre", 200, 50);
- //const baseDeDatos = [productoUno, productoDos, productoTres];
- 
+let baseDeDatos = [];   
 
-document.getElementById('primerProducto').innerHTML = `
-<div class="card" style="width: 18rem;">
-  <img src="https://sifu.unileversolutions.com/image/es-MX/recipe-topvisual/2/1260-709/hamburguesa-clasica-50425188.jpg" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">${productoUno.nombre}</h5>
-    <p class="card-text">${productoUno.precio}</p>
-    <button onclick="productoUno.mostrarProducto()" href="#" class="btn btn-primary">cargar al carrito</button>
-  </div>
-</div>
+let productoUno = new Producto ("Combo WHOPPER", 550, "Carne a la parrilla, pan, mayonesa, ketchup, cebolla, tomate, pepinos y lechuga, papas regulares y gaseosa 500ml.", "https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150", 20);
+let productoDos = new Producto ("Combo BK Stacker", 650, "Tres carnes a la parrilla, queso cheddar, panceta y salsa especial. Acompañado con una bebida y una papas fritas regulares.", "https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150", 13);
+let productoTres = new Producto ("Combo Doble Stacker Crispy", 560, "Doble carne a la parrilla, pan, doble cheddar, panceta, cebolla crispy, salsa stacker, gaseosa 500 ml y papas regulares.","https://images.deliveryhero.io/image/pedidosya/products/471535-bfa46f92-8844-4c0b-bc9c-df76e2dc2dc4.jpg?quality=80&width=200&height=150", 10);
+                       
+baseDeDatos.push(productoUno);
+baseDeDatos.push(productoDos);
+baseDeDatos.push(productoTres);
 
-`; 
+let aux = ``;
+for(let i = 0; i<baseDeDatos.length; i++){
+  if (baseDeDatos[i].stock > 0){
+  aux += `
+    <div class="card" style="width: 18rem;">
+    <img src="${baseDeDatos[i].imagen}" class="card-img-top" alt="...">
+    <div class="card-body">
+    <h5 class="card-title">${baseDeDatos[i].nombre}</h5>
+    <p class="card-text">${baseDeDatos[i].condimentos}</p>
+    <h3 class="card-text">$${baseDeDatos[i].precio}</h3>
+    <button onclick="totalCarrito()" href="#" class="btn btn-primary">cargar al carrito</button>
+    </div>
+    </div>
+  `;}else{
+      aux += '<h2>No tenemos stock</h2>'
+  }}
 
+  document.getElementById("galeria").innerHTML = aux;
 
-
-document.getElementById('segundoProducto').innerHTML = `
-<div class="card" style="width: 18rem;">
-  <img src="https://www.prensalibre.com/wp-content/uploads/2018/12/7e81ce29-02ce-4dc7-b646-8c59fd5a291f.jpg?quality=82&w=760&h=430&crop=1" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">${productoDos.nombre}</h5>
-    <p class="card-text">${productoDos.precio}</p>
-    <button onclick="productoDos.mostrarProducto()" href="#" class="btn btn-primary">cargar al carrito</button>
-  </div>
-</div>
-`; 
-document.getElementById('tercerProducto').innerHTML = `
-<div class="card" style="width: 18rem;">
-  <img src="https://gastronomiaycia.republica.com/wp-content/photos/postre_turron_chischoco1.jpg
- " class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">${productoTres.nombre}</h5>
-    <p class="card-text">${productoTres.precio}</p>
-    <button onclick="productoTres.mostrarProducto()" href="#" class="btn btn-primary">cargar al carrito</button>
-  </div>
-</div>
-`; 
-
-
-
+  console.log(aux);
