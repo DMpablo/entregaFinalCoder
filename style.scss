@@ -1,45 +1,38 @@
+$color1: rgb(211, 65, 65);
+$color2: rgb(252, 252, 252);
+
 body {
     margin: o;
     padding: 0;
     header{
         height: 100px;       
-        background-color: rgb(211, 65, 65);
-        color:antiquewhite;
+        background-color: $color1;
+        color:$color2;
         h1{
             padding-top: 25px;
             text-align:center ;
             margin-bottom:80px 0;
-            
-            }
-        
+        }       
     }
-    
-    .container{
-       display: flex;
+    h2{
+      margin: 60px 20px;
+      color: $color1;
+    }
+    #galeria{
+        display: flex;
+        width: 100%;
         div{
             align-items: center;
-            
-            div.card{
-                
-                img{
-                    width: 150px;
-
-                } 
-                div.card-body{
-                   h5{
-
-                    }
-                    p{
-
-                    }
-                    h3{
-
-                    } 
-                    button{
-                                              
+            div{
+                div{
+                    div{
+                        button.btn{
+                            color: $color1;
+                        }
                     }
                 }
+
             }
-        }  
+        }        
     }
 }     
