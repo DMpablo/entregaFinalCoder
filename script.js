@@ -18,7 +18,6 @@ class Producto {
     let aux = ``;
     for(let i = 0; i<baseDeDatos.length; i++){
         if (baseDeDatos[i].stock > 0){
-
             aux += `
             <div class="col-lg-4 col-md-4 mb-4 p-3">
                 <div class="card-100">
@@ -47,9 +46,9 @@ class Producto {
            // totalCarrito.push(nombre);
             totalCarrito.push(precio); 
             mostrarCarrito +=`
-            <div class="card" style="width: 18rem;">
+            <div class="card w-100" style="width: 18rem;">
             <div class="card-body">
-            <p class="card-text">$${precio}</p>
+            <p class="card-text ">$${precio}</p>
             </div>
             </div>
             `;
