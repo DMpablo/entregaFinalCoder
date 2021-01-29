@@ -10,7 +10,7 @@ class Producto {
     let productoUno = new Producto ("Combo WHOPPER", 550, "Carne a la parrilla, pan, mayonesa, ketchup, cebolla, tomate, pepinos y lechuga, papas regulares y gaseosa 500ml.", "https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150", 20);
     let productoDos = new Producto ("Combo BK Stacker Triple", 650, "Tres carnes a la parrilla, queso cheddar, panceta y salsa especial. Acompañado con una bebida y una papas fritas regulares.", "https://images.deliveryhero.io/image/pedidosya/products/471535-bfa46f92-8844-4c0b-bc9c-df76e2dc2dc4.jpg?quality=80&width=200&height=150", 13);
     let productoTres = new Producto ("Combo Doble Stacker Crispy", 560, "Doble carne a la parrilla, pan, doble cheddar, panceta, cebolla crispy, salsa stacker, gaseosa 500 ml y papas regulares.","https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150", 10);
-
+    
 
     baseDeDatos.push(productoUno);
     baseDeDatos.push(productoDos);
@@ -42,7 +42,6 @@ class Producto {
             </div>
             `;} 
     function agregar(precio){
-
            // totalCarrito.push(nombre);
             totalCarrito.push(precio); 
             mostrarCarrito +=`
