@@ -10,13 +10,18 @@
         document.getElementById("contador-carrito").innerHTML = carrito.length;
     }
 
+    
+
 
 
  fetch("./baseDeDatos.json")
 .then(response =>response.json())  
 .then (baseDeDatos => {
   for(let i = 0; i<baseDeDatos.length; i++){
-  let element = document.getElementById('galeria')
+  if(document.getElementById("galeria") != null){
+        document.getElementById("galeria").innerHTML;
+        
+        let element = document.getElementById('galeria')
   element.innerHTML += `
   <div class="col-lg-4 col-md-4 mb-4 p-3">
   <div class="card-100">
@@ -29,6 +34,7 @@
   </div>
   </div>
   `; 
+    }
   console.log(baseDeDatos);  
 }})
 
@@ -51,14 +57,16 @@
       let aux = 0; 
       for (let i=0; i< carrito.length; i++){            
         aux+=carrito[i].precio;
-        document.getElementById("lista-carrito").innerHTML += `
-        <div> ${carrito[i].nombre} ${carrito[i].precio}
-        <button onclick='borrarUnProducto()' href="#" class="btn btn-danger">-</button> 
-        </br>
-        </div>
-        `;
+        if(document.getElementById("lista-carrito") != null){
+          document.getElementById("lista-carrito").innerHTML += `
+          <div> ${carrito[i].nombre} ${carrito[i].precio}
+          <button onclick='borrarUnProducto()' href="#" class="btn btn-danger">-</button> 
+          </br>
+          </div>
+          `;
+          document.getElementById("totalCarrito").innerHTML = "$" + aux; 
+        }
       }
-      document.getElementById("totalCarrito").innerHTML = "$" + aux; 
     }
 
 
