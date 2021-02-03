@@ -1,8 +1,15 @@
-let carrito = [];
+/* fetch("./baseDeDatos.json")
+.then(response => {
+    return response.json();
+})
+.then (data => console.log(data));
+ */
 
+//import {agregarAlCarrito, borrarUnProducto}  from './Functions.js';
 //  if ternario
 //  (true) ? si es true pasa esto: sino pasa esto otro;
 
+let carrito = [];
 
 
 class Producto {
@@ -64,10 +71,15 @@ class Producto {
 
     } 
 
-
+   /* function borrarUnProducto(producto, contador){   
+        console.log(carrito);
+        carrito.lenght = carrito.lenght -1;
+        contador -= producto.precio; document.getElementById("totalCarrito").innerHTML = "$" + aux; 
+    }*/
     
-
-    function borrarUnProducto(producto){   
+    
+    
+       function borrarUnProducto(producto){   
         console.log(carrito);
         carrito.splice(producto, 1);   
         localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -77,5 +89,7 @@ class Producto {
             aux+=carrito[i].precio;           
         }
         document.getElementById("totalCarrito").innerHTML = "$" + aux; 
-    } 
+    }  
 
+
+  

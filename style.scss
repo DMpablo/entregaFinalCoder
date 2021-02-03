@@ -4,18 +4,40 @@ $color2: rgb(252, 252, 252);
 body {
     margin: o;
     padding: 0;
-    header{
+    nav.navbar{
         height: 100px;       
         background-color: $color1;
-        color:$color2;
-        h1{
+        
+        div.container-fluid{
             padding-top: 25px;
             text-align:center ;
             margin-bottom:80px 0;
-        }       
+            a{
+                color:$color2;
+                text-decoration:none;
+
+            }
+            a.productos{
+                margin-left: 60%;
+                text-decoration:none;
+
+            }
+            a.carrito-contador{ 
+                text-decoration:none;
+
+               
+                
+                b#contador-carrito{
+                 color:$color2;
+                }
+            }     
+        }
+              
+
+        
     }
     h2{
-      margin: 60px 20px;
+      margin: 160px 20px;
       color: $color1;
     }
     #galeria{

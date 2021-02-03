@@ -11,13 +11,23 @@
 </head>
 <body>
 
-    <header>
-         <h1>PediloAca!</h1>
-    </header>
-    <h2 class="text-center">Platos recomendados</h2>
-    <div class="row align-items-center" id="galeria">
+
+  <nav class="navbar fixed-top navbar-light ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="./index.html">PediloAca!</a>
+        <a class="productos" href="./productos.html" target="" rel="noopener noreferrer">productos</a>
+        <a class="carrito-contador" href="./descripcion-carrito.html" target="" rel="noopener noreferrer">
+         <img class="img-carrito" src="./assets/carrito.svg" alt="">
+         <b id="contador-carrito">0</b>
+        </a>
+         <!-- poner contador de carrito que despliegue la descripcion -->
     </div>
-       
+  </nav>
+
+    <h2 class="text-center">este el home</h2>
+   <!--  <div class="row align-items-center" id="galeria">
+    </div>
+        
     <h2 class="m-5 text-center">Descripcion de la compra</h2>
 
     <div class="container text-center">
@@ -28,13 +38,10 @@
         TOTAL <p id="totalCarrito"></p><span class="badge badge-light"></span>
       </button>
     </div>
+ -->
+       
 
-     
- 
- 
-    <script src="./scriptPrueba.js"></script>   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    
-
+    <script  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>  
 </body>
 </html>
