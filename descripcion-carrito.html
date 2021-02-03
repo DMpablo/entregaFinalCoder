@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="./css/style.css">
     <script type="text/javascript" async src="./js/main.js"></script> 
   </head>
-  <body>
+  <body onload="mostrarCarrito()">
     
     <nav class="navbar fixed-top navbar-light ">
     <div class="container-fluid">
       <a class="navbar-brand" href="./index.html">PediloAca!</a>
       <a class="productos" href="./productos.html" target="" rel="noopener noreferrer">productos</a>
-      <a class="carrito-contador" href="./descripcion-carrito.html" onclick="mostrarCarrito()" target="" rel="noopener noreferrer">
+      <a class="carrito-contador" href="./descripcion-carrito.html"  target="" rel="noopener noreferrer">
         <img class="img-carrito" src="./assets/carrito.svg" alt="">
         <b id="contador-carrito">0</b>
       </a>
