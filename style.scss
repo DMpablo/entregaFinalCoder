@@ -2,7 +2,7 @@ $color1: rgb(211, 65, 65);
 $color2: rgb(252, 252, 252);
 
 body {
-    margin: o;
+    margin: 0;
     padding: 0;
     nav.navbar{
         height: 100px;       
@@ -10,43 +10,39 @@ body {
         
         div.container-fluid{
             padding-top: 25px;
-            text-align:center ;
             margin-bottom:80px 0;
             a{
                 color:$color2;
                 text-decoration:none;
-
             }
             a.productos{
-                margin-left: 60%;
                 text-decoration:none;
-
             }
             a.carrito-contador{ 
                 text-decoration:none;
-
-               
-                
                 b#contador-carrito{
                  color:$color2;
                 }
             }     
-        }
-              
-
-        
+        }        
     }
     h2{
-      margin: 160px 20px;
+      margin: 160px 20px 10px;
       color: $color1;
     }
     #galeria{
-        display: flex;
         width: 100%;
-        div{
-            align-items: center;
+        display: flex;
+        justify-content: center;
+        div{            
             div{
+                h3{
+                    font-size: 20px;
+                }
                 div{
+                    h4{
+                        font-size: 15px;
+                    }
                     div{
                         button.btn{
                             color: $color1;
@@ -56,5 +52,41 @@ body {
 
             }
         }        
+    }
+    section{
+        background-color: $color2;
+        .container{
+            h2{
+                margin: 20px 10px;
+                color: $color1;
+            }
+            .shoppingCartItemsContainer{
+                
+                .shoppingCartItem{
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+
+                    img{
+                        border-radius: 12%;
+                        width: 30vh;
+                    }
+                    p{
+                        font-size: 15px;
+                        color: $color1;
+                    }
+                    input{
+                        height: 35px;
+                        width: 10%;
+                        border-radius: 10px;
+                        margin-top: 10px;
+                    }
+                    button{
+                        height: 35px;
+                        width: 5%;
+                    }
+                }
+            }
+        }
     }
 }     
