@@ -26,7 +26,7 @@ body {
             }     
         }        
     }
-    h2{
+    h2.titulo{
       margin: 160px 20px 10px;
       color: $color1;
     }
@@ -54,6 +54,7 @@ body {
         }        
     }
     section{
+        
         background-color: $color2;
         .container{
             h2{
@@ -61,9 +62,7 @@ body {
                 color: $color1;
                
             }
-             h2.limpiar-carrito{
-                height: 10px;
-                }
+            
             .shoppingCartItemsContainer{
                 
                 .shoppingCartItem{
@@ -91,6 +90,23 @@ body {
                     }
                 }
             }
+        }
+        div {
+            h2{
+                color: $color1;
+            }
+
+        }
+        .contenedor-vaciar-carrito{
+            .vaciar{
+                font-size: 15px;
+                margin: 2px;
+                button.limpiar-carrito{
+                    height: 80px;
+                    }
+            }
+
+
         }
     }
 }     
