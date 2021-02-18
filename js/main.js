@@ -1,16 +1,17 @@
 let carrito = []; 
 
+
 if(localStorage.getItem('carrito') != null){
   console.log('entro en la validacion');
   let carrito = localStorage.getItem('carrito');
   $('#contador-carrito').html(carrito.length);
 }
 
+const shoppingItemsContainer = document.querySelector('.shoppingCartItemsContainer');
 
 fetch("./baseDeDatos.json")
 .then(response => response.json())  
 .then(baseDeDatos => {
-  
  for(let i = 0; i<baseDeDatos.length; i++){
      if($(".galeria") != null){
          $(".galeria").innerHTML;        
@@ -32,8 +33,7 @@ addToShoppingCartBtn.forEach((agregarConClick) => {
 agregarConClick.addEventListener('click', crearProducto);
 })}}})  
 
-const shoppingItemsContainer = document.querySelector('.shoppingCartItemsContainer');
-
+$('.limpiar-carrito').click(vaciarCarrito);
 
 
 function crearProducto(event){   
@@ -48,36 +48,29 @@ function crearProducto(event){
     itemImage,
     1
   ) 
- 
+
   
-  crearProductosEnHtml(producto.nombre, producto.precio, producto.imagen , producto);
- 
-  //agregarAlContadorCarrito();
+  carrito.push(producto);
+  let posicionProducto = carrito.indexOf(producto);
+  
+  
+  crearProductosEnHtml(producto.nombre, producto.precio, producto.imagen, posicionProducto );
+  actualizarCarrito();
 }   
-function agregarAlContadorCarrito(){
-document.getElementById("contador-carrito").innerHTML = carrito.length;
-$('#contador-carrito').html(carrito.length);
+
+function actualizarCarrito(){
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  $('#contador-carrito').html(carrito.length);
+
 }
+
+
   
-function crearProductosEnHtml(nombre, precio, imagen, producto){
+function crearProductosEnHtml(nombre, precio, imagen, posicionProducto){
 //esta funcion quiero que muestre el carrito con descripcion en html
-for (let i = 0; i < carrito.length; i++) {
-  if(carrito[i].nombre == producto.nombre){
-    console.log('tienen el mismo nombre');
-    
-  }else{
-    console.log('No tienen el mismo nombre');
-    carrito.push(producto);
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-  }
-}
-
-
-
 const shoppingCartRow = document.createElement('div');
 const shoppingCartContent = `
 <div class="row shoppingCartItem shopping-cart-quantity">
- 
     <img src="${imagen}" class="col-2 shopping-cart-img" alt="">
     <p class="col-2 shopping-cart-item-title shoppingCartItemTitle">${nombre}</p>
     <p class="col-2 item-price mb-0 shoppingCartItemPrice">${precio}</p>    
@@ -85,28 +78,26 @@ const shoppingCartContent = `
       <button class="col-2 btn btn-danger buttonDelete m-2">X</button>
 </div>
 `;
-
-  //carrito.push(producto);
-  //localStorage.setItem("carrito", JSON.stringify(carrito));
   shoppingItemsContainer.append(shoppingCartRow);
   shoppingCartRow.innerHTML = shoppingCartContent;
-
-
-
-
-//let cantidadValue = $('.shopping-cart-quantity-input').val();
-//console.log(cantidadValue);
-//let padreBotonDelete = $('.shoppingCartItem');
-shoppingCartRow.querySelector('.buttonDelete').addEventListener('click', (e) => removeItemShoppingCart(e, producto));
-
-
+  shoppingCartRow.querySelector('.buttonDelete').addEventListener('click', (e) => removeItemShoppingCart(e, posicionProducto));
 }
 
-function removeItemShoppingCart(event,producto){
+function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
-  console.log(carrito);
+  carrito.splice(posicionProducto,1);
+  //console.log(carrito);
+  actualizarCarrito()
 }
+
+function vaciarCarrito (){
+  carrito.length = 0;
+  $('.shoppingCartItem').remove();
+  actualizarCarrito()
+}
+
+
 
 
 class Producto {
