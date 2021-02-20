@@ -5,29 +5,35 @@ body {
     margin: 0;
     padding: 0;
     nav.navbar{
-        height: 100px;       
+        height: auto;       
         background-color: $color1;
-        
+        margin-bottom: 60px;
         div.container-fluid{
             padding-top: 25px;
             margin-bottom:80px 0;
-            a{
+            p{
                 color:$color2;
                 text-decoration:none;
             }
-            a.productos{
-                text-decoration:none;
-            }
-            a.carrito-contador{ 
-                text-decoration:none;
-                b#contador-carrito{
-                 color:$color2;
+            div.descripcion-productos{
+                div.productos-contador{
+                    b#contador-carrito{
+                        color:$color2;
+                    }      
                 }
-            }     
-        }        
+                .icon-menu{
+                    margin-left: 15px;
+                    height: 3em;
+                }
+            
+            
+            }
+        
+                
+        }       
     }
     h2.titulo{
-      margin: 160px 20px 10px;
+     /*  margin: 160px 20px 10px; */
       color: $color1;
     }
     #galeria{

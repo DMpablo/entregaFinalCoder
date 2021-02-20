@@ -1,4 +1,9 @@
 let carrito = []; 
+$('.limpiar-carrito').click(vaciarCarrito);
+$('.productos-menu').hide();
+$('.productos-titulo').hide();
+$(".descripcion-productos").click(menuNav); 
+let suma = 0;
 
 
 if(localStorage.getItem('carrito') != null){
@@ -23,7 +28,7 @@ fetch("./baseDeDatos.json")
             <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
             <div class="card-body row">
               <h4 class="card-text">${baseDeDatos[i].condimentos}</h4>
-              <h3 class="item-price text-danger">$${baseDeDatos[i].precio}</h3>
+              <h3 class="item-price text-danger ">${baseDeDatos[i].precio}</h3>
               <button class="btn btn-danger">Agregar al carrito</button>
             </div>
           </div>
@@ -31,42 +36,63 @@ fetch("./baseDeDatos.json")
 const addToShoppingCartBtn = document.querySelectorAll('.btn');
 addToShoppingCartBtn.forEach((agregarConClick) => {
 agregarConClick.addEventListener('click', crearProducto);
+
 })}}})  
 
-$('.limpiar-carrito').click(vaciarCarrito);
 
-
+function menuNav(){
+  $('.pedilo-aca').toggle();
+  $('.productos-titulo').toggle();
+  $(".productos-menu").slideToggle("fast");
+};
 function crearProducto(event){   
   const button = event.target;
   const item = button.closest('.item');
   const itemTitle = item.querySelector('.item-title').textContent;
   let itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-imagen').src;
-  let producto = new Producto (
-    itemTitle,
-    itemPrice,
-    itemImage,
-    1
-  ) 
-
-  
+  let producto = new Producto(
+      itemTitle,
+      Number(itemPrice),
+      itemImage,
+      1
+  )  
   carrito.push(producto);
   let posicionProducto = carrito.indexOf(producto);
-  
-  
-  crearProductosEnHtml(producto.nombre, producto.precio, producto.imagen, posicionProducto );
-  actualizarCarrito();
-}   
 
+ //validacionFor(producto);
+  //validacioIndexOf(producto);
+  actualizarCarrito();
+  crearProductosEnHtml(producto.nombre, producto.precio, producto.imagen, posicionProducto);
+  sumarTotalCarrito() 
+}   
+function validacionFor(producto){
+
+  for (let i = 0; i < carrito.length; i++) {
+    if(carrito[i].nombre == producto.nombre){
+      console.log(producto.nombre + ' ya esta en carrito');
+    }else {
+      console.log(producto.nombre + ' se agrego al carrito');
+      carrito.push(producto);
+    }
+  }
+ 
+}
+function validacionIndexOf(producto){
+if(carrito.indexOf(producto.nombre) === -1){
+  console.log(producto.nombre + ' se agrego al carrito');
+  carrito.push(producto);
+}else{
+  console.log(producto.nombre + ' ya esta en carrito');
+}
+
+}
 function actualizarCarrito(){
   localStorage.setItem("carrito", JSON.stringify(carrito));
   $('#contador-carrito').html(carrito.length);
 
 }
-
-
-  
-function crearProductosEnHtml(nombre, precio, imagen, posicionProducto){
+function crearProductosEnHtml(nombre, precio, imagen, posicionProducto ){
 //esta funcion quiero que muestre el carrito con descripcion en html
 const shoppingCartRow = document.createElement('div');
 const shoppingCartContent = `
@@ -78,26 +104,40 @@ const shoppingCartContent = `
       <button class="col-2 btn btn-danger buttonDelete m-2">X</button>
 </div>
 `;
-  shoppingItemsContainer.append(shoppingCartRow);
-  shoppingCartRow.innerHTML = shoppingCartContent;
-  shoppingCartRow.querySelector('.buttonDelete').addEventListener('click', (e) => removeItemShoppingCart(e, posicionProducto));
+shoppingItemsContainer.append(shoppingCartRow);
+shoppingCartRow.innerHTML = shoppingCartContent;
+shoppingCartRow.querySelector('.buttonDelete').addEventListener('click', (e) => removeItemShoppingCart(e, posicionProducto, precio));
 }
-
-function removeItemShoppingCart(event, posicionProducto){
+function removeItemShoppingCart(event, posicionProducto, precio){
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
   carrito.splice(posicionProducto,1);
-  //console.log(carrito);
+  //console.log(precio);
+  restarTotalCarrito()
   actualizarCarrito()
 }
-
-function vaciarCarrito (){
+function vaciarCarrito(){
   carrito.length = 0;
+  suma = 0;
   $('.shoppingCartItem').remove();
   actualizarCarrito()
 }
+function sumarTotalCarrito(){
+  /* esta funcion solo suma,no actualiza el valor total */
+   
+     for (let i = 0; i < carrito.length; i++) {
+      suma += carrito[i].precio; 
+    } 
+    
+} 
 
+function restarTotalCarrito(){
+  for (let i = 0; i < carrito.length; i++) {
+   suma -= carrito[i].precio; 
 
+  }
+  console.log(suma);
+} 
 
 
 class Producto {
