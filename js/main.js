@@ -3,6 +3,7 @@ $('.limpiar-carrito').click(vaciarCarrito);
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
 $(".descripcion-productos").click(menuNav); 
+//$('body').scrollspy({ target: '#scroll' })
 let suma = 0;
 
 
@@ -28,8 +29,9 @@ fetch("./baseDeDatos.json")
             <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
             <div class="card-body row">
               <h4 class="card-text">${baseDeDatos[i].condimentos}</h4>
-              <h3 class="item-price text-danger ">${baseDeDatos[i].precio}</h3>
-              <button class="btn btn-danger">Agregar al carrito</button>
+              <h3 class="item-price text-danger">${baseDeDatos[i].precio}</h3>
+              <button class="btn btn-danger">Agregar al carrito
+              <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
             </div>
           </div>
          </div>`;
@@ -60,21 +62,24 @@ function crearProducto(event){
   carrito.push(producto);
   let posicionProducto = carrito.indexOf(producto);
 
- //validacionFor(producto);
+ validacionFor(producto);
   //validacioIndexOf(producto);
   actualizarCarrito();
   crearProductosEnHtml(producto.nombre, producto.precio, producto.imagen, posicionProducto);
   sumarTotalCarrito() 
 }   
-function validacionFor(producto){
 
+function validacionFor(producto){
+  //producto.nombre
   for (let i = 0; i < carrito.length; i++) {
-    if(carrito[i].nombre == producto.nombre){
-      console.log(producto.nombre + ' ya esta en carrito');
+    if(carrito[i].nombre === producto.nombre ){
+        console.log(carrito[i].nombre + ' ya esta en carrito');
+        
     }else {
       console.log(producto.nombre + ' se agrego al carrito');
-      carrito.push(producto);
+      
     }
+    return
   }
  
 }
@@ -93,15 +98,14 @@ function actualizarCarrito(){
 
 }
 function crearProductosEnHtml(nombre, precio, imagen, posicionProducto ){
-//esta funcion quiero que muestre el carrito con descripcion en html
 const shoppingCartRow = document.createElement('div');
 const shoppingCartContent = `
-<div class="row shoppingCartItem shopping-cart-quantity">
-    <img src="${imagen}" class="col-2 shopping-cart-img" alt="">
-    <p class="col-2 shopping-cart-item-title shoppingCartItemTitle">${nombre}</p>
-    <p class="col-2 item-price mb-0 shoppingCartItemPrice">${precio}</p>    
-      <input class="col-2 shopping-cart-quantity-input" type="number" value="1">
-      <button class="col-2 btn btn-danger buttonDelete m-2">X</button>
+<div class="shoppingCartItem shopping-cart-quantity">
+    <img src="${imagen}" class="shopping-cart-img m-2" alt="">
+    <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${nombre}</p>
+    <p class=" item-price mb-0 shoppingCartItemPrice m-2">${precio}</p>    
+      <input class="cantidad-input m-2" type="number" value="1">
+      <button class="btn btn-danger buttonDelete m-2">X</button>
 </div>
 `;
 shoppingItemsContainer.append(shoppingCartRow);

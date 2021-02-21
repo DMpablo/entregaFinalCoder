@@ -1,14 +1,20 @@
 $color1: rgb(211, 65, 65);
 $color2: rgb(252, 252, 252);
+$color3: rgba(36, 3, 3, 0.623);
+$breakpoint-tablet: 429px;
+
+
 
 body {
+    
     margin: 0;
     padding: 0;
     nav.navbar{
         height: auto;       
-        background-color: $color1;
-        margin-bottom: 60px;
+        padding: 0px;
+        /* margin-bottom: 60px; */
         div.container-fluid{
+            background-color: $color1;
             padding-top: 25px;
             margin-bottom:80px 0;
             p{
@@ -16,6 +22,7 @@ body {
                 text-decoration:none;
             }
             div.descripcion-productos{
+                
                 div.productos-contador{
                     b#contador-carrito{
                         color:$color2;
@@ -33,7 +40,8 @@ body {
         }       
     }
     h2.titulo{
-     /*  margin: 160px 20px 10px; */
+     margin-top: 120px;
+     
       color: $color1;
     }
     #galeria{
@@ -59,13 +67,15 @@ body {
             }
         }        
     }
-    section{
-        
-        background-color: $color2;
+    #scroll{
+        background-color: $color3;  
+        height: 60vh;
+        overflow-y:auto;    
+       
         .container{
             h2{
                 margin: 20px 10px;
-                color: $color1;
+                color: $color2;
                
             }
             
@@ -79,20 +89,28 @@ body {
                     img{
                         border-radius: 12%;
                         width: 30vh;
+                        @media (max-width: $breakpoint-tablet){
+                            display:none;
+                            
+                        }
                     }
                     p{
+                        width: 130px;
                         font-size: 15px;
-                        color: $color1;
+                        color: $color2;
+                    }
+                    .item-price{
+                        width: 30px;
                     }
                     input{
-                        height: 35px;
-                        width: 10%;
+                        height: 25px;
+                        width: 20%;
                         border-radius: 10px;
                         margin-top: 10px;
                     }
                     button{
                         height: 35px;
-                        width: 5%;
+                        
                     }
                 }
             }
@@ -100,6 +118,9 @@ body {
         div {
             h2{
                 color: $color1;
+            }
+            p{
+                color: $color2;
             }
 
         }
