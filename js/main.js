@@ -5,12 +5,20 @@ $('.productos-titulo').hide();
 $(".descripcion-productos").click(menuNav); 
 //$('body').scrollspy({ target: '#scroll' })
 let suma = 0;
-
+let nombres = [];
 
 if(localStorage.getItem('carrito') != null){
   console.log('entro en la validacion');
   let carrito = localStorage.getItem('carrito');
   $('#contador-carrito').html(carrito.length);
+}
+class Producto {
+  constructor(nombreCombo, precioCombo, imagenProducto, cantidadSeleccionada) {
+    this.nombre = nombreCombo;
+    this.precio = precioCombo;
+    this.imagen = imagenProducto;
+    this.cantidad = cantidadSeleccionada;
+  }
 }
 
 const shoppingItemsContainer = document.querySelector('.shoppingCartItemsContainer');
@@ -41,12 +49,6 @@ agregarConClick.addEventListener('click', crearProducto);
 
 })}}})  
 
-
-function menuNav(){
-  $('.pedilo-aca').toggle();
-  $('.productos-titulo').toggle();
-  $(".productos-menu").slideToggle("fast");
-};
 function crearProducto(event){   
   const button = event.target;
   const item = button.closest('.item');
@@ -60,97 +62,134 @@ function crearProducto(event){
       1
   )  
   carrito.push(producto);
-  let posicionProducto = carrito.indexOf(producto);
 
- validacionFor(producto);
-  //validacioIndexOf(producto);
+  posicionProducto = carrito.indexOf(producto);
+  
+  crearProductosEnNav(producto,posicionProducto);
+  //sumarTotalCarrito();
   actualizarCarrito();
-  crearProductosEnHtml(producto.nombre, producto.precio, producto.imagen, posicionProducto);
-  sumarTotalCarrito() 
+  //validacionFor(producto, posicionProducto);
+  //validacionIndexOf(producto);
 }   
 
-function validacionFor(producto){
-  //producto.nombre
-  for (let i = 0; i < carrito.length; i++) {
-    if(carrito[i].nombre === producto.nombre ){
-        console.log(carrito[i].nombre + ' ya esta en carrito');
-        
-    }else {
-      console.log(producto.nombre + ' se agrego al carrito');
-      
-    }
-    return
-  }
- 
-}
-function validacionIndexOf(producto){
-if(carrito.indexOf(producto.nombre) === -1){
-  console.log(producto.nombre + ' se agrego al carrito');
-  carrito.push(producto);
-}else{
-  console.log(producto.nombre + ' ya esta en carrito');
-}
 
-}
-function actualizarCarrito(){
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  $('#contador-carrito').html(carrito.length);
 
-}
-function crearProductosEnHtml(nombre, precio, imagen, posicionProducto ){
+
+function crearProductosEnNav(producto, posicionProducto ){
 const shoppingCartRow = document.createElement('div');
 const shoppingCartContent = `
 <div class="shoppingCartItem shopping-cart-quantity">
-    <img src="${imagen}" class="shopping-cart-img m-2" alt="">
-    <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${nombre}</p>
-    <p class=" item-price mb-0 shoppingCartItemPrice m-2">${precio}</p>    
-      <input class="cantidad-input m-2" type="number" value="1">
+    <img src="${producto.imagen}" class="shopping-cart-img m-2" alt="">
+    <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${producto.nombre}</p>
+    <p class="item-price mb-0 shoppingCartItemPrice m-2">${producto.precio}</p>    
+      <input class="cantidad-input m-2" type="number" value="1" min="0">
       <button class="btn btn-danger buttonDelete m-2">X</button>
 </div>
 `;
-shoppingItemsContainer.append(shoppingCartRow);
-shoppingCartRow.innerHTML = shoppingCartContent;
-shoppingCartRow.querySelector('.buttonDelete').addEventListener('click', (e) => removeItemShoppingCart(e, posicionProducto, precio));
+$(shoppingItemsContainer).append(shoppingCartRow);
+$(shoppingCartRow).html(shoppingCartContent);
+$('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto, producto));
+ //falta cambiar la cantidad del obbjeto
+$('.cantidad-input').on('keyup',function(){
+  let cantidadInput = $(this).val();
+  carrito[posicionProducto].cantidad = cantidadInput
+
+ console.log(carrito[posicionProducto].precio);
+
+ let actualCantidad = cantidadInput * carrito[posicionProducto].precio;
+ 
+ carrito[posicionProducto].precio = actualCantidad;
+ 
+ console.log(carrito[posicionProducto].precio); 
+ 
+  //sumarTotalCarrito(actualCantidad)
+ actualizarCarrito()
+})
 }
-function removeItemShoppingCart(event, posicionProducto, precio){
+
+function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
   carrito.splice(posicionProducto,1);
-  //console.log(precio);
+  
   restarTotalCarrito()
   actualizarCarrito()
 }
+
+
+function menuNav(){
+  $('.pedilo-aca').toggle();
+  $('.productos-titulo').toggle();
+  $(".productos-menu").slideToggle("fast");
+}
+
+function actualizarCarrito(){
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  $('#contador-carrito').html(carrito.length);
+  $('.total-carrito').html(suma);
+}
+
 function vaciarCarrito(){
   carrito.length = 0;
+  nombres.length = 0;
   suma = 0;
   $('.shoppingCartItem').remove();
   actualizarCarrito()
 }
-function sumarTotalCarrito(){
-  /* esta funcion solo suma,no actualiza el valor total */
-   
-     for (let i = 0; i < carrito.length; i++) {
-      suma += carrito[i].precio; 
-    } 
-    
-} 
 
 function restarTotalCarrito(){
   for (let i = 0; i < carrito.length; i++) {
    suma -= carrito[i].precio; 
-
-  }
-  console.log(suma);
-} 
-
-
-class Producto {
-  constructor(nombreCombo, precioCombo, imagenProducto, cantidadSeleccionada) {
-    this.nombre = nombreCombo;
-    this.precio = precioCombo;
-    this.imagen = imagenProducto;
-    this.cantidad = cantidadSeleccionada;
+   return
   }
 }
+function sumarTotalCarrito(actualCantidad){
+  /* esta funcion solo suma,no actualiza el valor total */
+     for (let i = 0; i < carrito.length; i++) {
+      suma = actualCantidad  
+      console.log ( 'total '+suma);
+      actualizarCarrito();
+      return
+} 
+}
 
-  
+
+
+
+
+
+function multiplicarIput(cantidad, precio){
+    suma += cantidad * precio;
+    console.log('total hasta ahora '+ suma);
+    actualizarCarrito()
+}
+function validacionFor(producto, posicionProducto){
+  console.log('validacion For');
+  ;
+ for (let i = 0; i < nombres.length; i++) {
+  if (producto.nombre == nombres[i]){
+     console.log('true');
+ 
+   }else{
+     console.log('false');
+     //nombres.push(producto.nombre)
+ 
+   }
+   
+ }
+ 
+ }
+ 
+ function validacionIndexOf(producto){
+   
+   if(carrito.indexOf(producto) == -1){
+     console.log(' se agrego al carrito');
+   }else if(carrito.indexOf(producto) >= 0) {
+     console.log(' ya esta en carrito');
+   }else{
+     console.log('ni uno ni otro');
+   }
+   
+   console.log(carrito.indexOf(producto))
+ }
+ 
