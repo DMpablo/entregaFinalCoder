@@ -23,7 +23,7 @@ class Producto {
 
 const shoppingItemsContainer = document.querySelector('.shoppingCartItemsContainer');
 
-fetch("./baseDeDatos.json")
+fetch("/baseDeDatos.json")
 .then(response => response.json())  
 .then(baseDeDatos => {
  for(let i = 0; i<baseDeDatos.length; i++){
@@ -96,11 +96,14 @@ $('.cantidad-input').on('keyup',function(){
 
  console.log(carrito[posicionProducto].precio);
 
- let actualCantidad = cantidadInput * carrito[posicionProducto].precio;
- 
- carrito[posicionProducto].precio = actualCantidad;
- 
- console.log(carrito[posicionProducto].precio); 
+if(cantidadInput >= 1){
+  let nuevoPrecio = cantidadInput * carrito[posicionProducto].precio;
+  //carrito[posicionProducto].precio = nuevoPrecio;
+  console.log(nuevoPrecio); 
+}else{
+  console.log(false);
+
+}
  
   //sumarTotalCarrito(actualCantidad)
  actualizarCarrito()
@@ -178,9 +181,9 @@ function validacionFor(producto, posicionProducto){
    
  }
  
- }
+}
  
- function validacionIndexOf(producto){
+function validacionIndexOf(producto){
    
    if(carrito.indexOf(producto) == -1){
      console.log(' se agrego al carrito');
@@ -191,5 +194,5 @@ function validacionFor(producto, posicionProducto){
    }
    
    console.log(carrito.indexOf(producto))
- }
+}
  
