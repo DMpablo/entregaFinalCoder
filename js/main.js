@@ -23,7 +23,7 @@ class Producto {
 
 const shoppingItemsContainer = document.querySelector('.shoppingCartItemsContainer');
 
-fetch("/baseDeDatos.json")
+fetch("./baseDeDatos.json")
 .then(response => response.json())  
 .then(baseDeDatos => {
  for(let i = 0; i<baseDeDatos.length; i++){

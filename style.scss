@@ -97,6 +97,21 @@ body {
                 }
             }
             div {
+
+                .contenedor-vaciar-carrito{
+                    .vaciar{
+                        font-family: $font-parrafos;
+                        font-size: 15px;
+                        margin-right: 20px;
+                       
+                        button.limpiar-carrito{
+                            width: 40px;
+                            height: 80px;
+                            }
+                    }
+
+
+                }
                 h2{
                     font-family: $font-titulos;
                     color: $color2;
@@ -107,19 +122,12 @@ body {
                 }
 
             }
-            .contenedor-vaciar-carrito{
-                .vaciar{
-                    font-family: $font-parrafos;
-                    font-size: 15px;
-                    margin: 2px;
-                    button.limpiar-carrito{
-                        
-                        height: 80px;
-                        }
+            .contenedor-comprar{
+                button.continuar-compra{
+                    margin-bottom: 10px;
                 }
-
-
             }
+            
         }
 
     h2.titulo{
