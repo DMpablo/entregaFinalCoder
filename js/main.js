@@ -2,8 +2,10 @@ let carrito = [];
 $('.limpiar-carrito').click(vaciarCarrito);
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
+$('.continnuarCompra').hide();
 $(".descripcion-productos").click(menuNav); 
-//$('body').scrollspy({ target: '#scroll' })
+$('.continuar-compra').click(formCompra);
+
 let suma = 0;
 let nombres = [];
 
@@ -36,17 +38,17 @@ fetch("./baseDeDatos.json")
             <h3 class="item-title card-title">${baseDeDatos[i].nombre}</h3>
             <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
             <div class="card-body row">
-              <h4 class="card-text">${baseDeDatos[i].condimentos}</h4>
-              <h3 class="item-price text-danger">${baseDeDatos[i].precio}</h3>
-              <button class="btn btn-danger">Agregar al carrito
-              <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
+            <h4 class="card-text">${baseDeDatos[i].condimentos}</h4>
+            <h3 class="item-price text-danger">${baseDeDatos[i].precio}</h3>
+            <button class="btn btn-danger">Agregar al carrito
+            <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
             </div>
           </div>
          </div>`;
 const addToShoppingCartBtn = document.querySelectorAll('.btn');
 addToShoppingCartBtn.forEach((agregarConClick) => {
 agregarConClick.addEventListener('click', crearProducto);
-
+$('.agregado-carrito').hide()
 })}}})  
 
 function crearProducto(event){   
@@ -62,16 +64,23 @@ function crearProducto(event){
       1
   )  
   carrito.push(producto);
-
+  
+  
   posicionProducto = carrito.indexOf(producto);
   
+  alertaAgregado()
   crearProductosEnNav(producto,posicionProducto);
-  //sumarTotalCarrito();
+  sumarTotalCarrito(producto.precio);
   actualizarCarrito();
   //validacionFor(producto, posicionProducto);
   //validacionIndexOf(producto);
 }   
-
+function alertaAgregado() {
+  $('.alertas').html('Producto agregado')
+  $('.alertas').fadeIn(function () {
+    $('.alertas').fadeOut(2000)
+  })
+}
 
 
 
@@ -89,7 +98,6 @@ const shoppingCartContent = `
 $(shoppingItemsContainer).append(shoppingCartRow);
 $(shoppingCartRow).html(shoppingCartContent);
 $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto, producto));
- //falta cambiar la cantidad del obbjeto
 $('.cantidad-input').on('keyup',function(){
   let cantidadInput = $(this).val();
   carrito[posicionProducto].cantidad = cantidadInput
@@ -98,27 +106,31 @@ $('.cantidad-input').on('keyup',function(){
 
 if(cantidadInput >= 1){
   let nuevoPrecio = cantidadInput * carrito[posicionProducto].precio;
-  //carrito[posicionProducto].precio = nuevoPrecio;
+  sumarTotalCarrito(nuevoPrecio)
+  actualizarCarrito()
   console.log(nuevoPrecio); 
 }else{
   console.log(false);
 
 }
  
-  //sumarTotalCarrito(actualCantidad)
- actualizarCarrito()
+ 
+ 
 })
 }
-
 function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
   carrito.splice(posicionProducto,1);
-  
+
+  $('.alertas').html('Producto eliminado')
+  $('.alertas').fadeIn(function () {
+    $('.alertas').fadeOut(2000)
+  })
+
   restarTotalCarrito()
   actualizarCarrito()
 }
-
 
 function menuNav(){
   $('.pedilo-aca').toggle();
@@ -137,6 +149,11 @@ function vaciarCarrito(){
   nombres.length = 0;
   suma = 0;
   $('.shoppingCartItem').remove();
+  $('.continnuarCompra').hide(500);
+  $('.alertas').html('Vaciado con exito')
+  $('.alertas').fadeIn(function () {
+    $('.alertas').fadeOut(2000)
+  })
   actualizarCarrito()
 }
 
@@ -146,16 +163,29 @@ function restarTotalCarrito(){
    return
   }
 }
-function sumarTotalCarrito(actualCantidad){
+function sumarTotalCarrito(precio){
   /* esta funcion solo suma,no actualiza el valor total */
      for (let i = 0; i < carrito.length; i++) {
-      suma = actualCantidad  
-      console.log ( 'total '+suma);
+      suma += precio  
+      console.log ( 'total '+ suma );
       actualizarCarrito();
-      return
 } 
 }
 
+
+function formCompra() {
+ let precioTotal = Number($('#total-compra').text());
+ if (precioTotal > 0) {
+  $('.continnuarCompra').show()
+ }else{
+  $('.alertas').html('Carrito vacio')
+  $('.alertas').fadeIn(function () {
+    $('.alertas').fadeOut(2000)
+  })
+ }
+ 
+  
+} 
 
 
 
