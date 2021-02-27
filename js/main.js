@@ -1,16 +1,19 @@
+$(async function () {
+  
 let carrito = []; 
-$('.limpiar-carrito').click(vaciarCarrito);
+let nombres = [];
+//let suma = 0;
+
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
 $('.continnuarCompra').hide();
-$(".descripcion-productos").click(menuNav); 
 $('.continuar-compra').click(formCompra);
+$(".descripcion-productos").click(menuNav); 
+$('.limpiar-carrito').click(vaciarCarrito);
 
-let suma = 0;
-let nombres = [];
 
 if(localStorage.getItem('carrito') != null){
-  console.log('entro en la validacion');
+  //console.log('entro en la validacion');
   let carrito = localStorage.getItem('carrito');
   $('#contador-carrito').html(carrito.length);
 }
@@ -64,17 +67,32 @@ function crearProducto(event){
       1
   )  
   carrito.push(producto);
-  
-  
   posicionProducto = carrito.indexOf(producto);
-  
+  //carrito[posicionProducto].nombre
+
+ /* if ( carrito.indexOf(producto) >= 0 ) {
+  console.log(true);
+
+}else if (carrito.indexOf(producto) == -1 ){
+  carrito.push(producto);
+  console.log(false);
+} else{
+  console.log('ninguna de las anteriores');
+} */
   alertaAgregado()
   crearProductosEnNav(producto,posicionProducto);
-  sumarTotalCarrito(producto.precio);
+  suma2()
   actualizarCarrito();
   //validacionFor(producto, posicionProducto);
   //validacionIndexOf(producto);
+
 }   
+
+
+
+
+
+
 function alertaAgregado() {
   $('.alertas').html('Producto agregado')
   $('.alertas').fadeIn(function () {
@@ -101,23 +119,22 @@ $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto, pro
 $('.cantidad-input').on('keyup',function(){
   let cantidadInput = $(this).val();
   carrito[posicionProducto].cantidad = cantidadInput
-
- console.log(carrito[posicionProducto].precio);
-
+  console.log(carrito[posicionProducto].cantidad );
+ //console.log(carrito[posicionProducto].precio);
 if(cantidadInput >= 1){
-  let nuevoPrecio = cantidadInput * carrito[posicionProducto].precio;
-  sumarTotalCarrito(nuevoPrecio)
+  //let nuevoPrecio = cantidadInput * carrito[posicionProducto].precio;
+  
+
+  suma2()
   actualizarCarrito()
-  console.log(nuevoPrecio); 
+  console.log('nuevo precui '+ nuevoPrecio); 
 }else{
   console.log(false);
 
-}
- 
- 
- 
+} 
 })
 }
+
 function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
@@ -138,10 +155,26 @@ function menuNav(){
   $(".productos-menu").slideToggle("fast");
 }
 
-function actualizarCarrito(){
+
+function suma2(ns) {
+  const suma = (ns) => {
+  let acumulado = 0;
+  for (let i = 0; i < ns.length; i++) {
+    acumulado +=ns[i];
+  }
+  return acumulado
+  }
+const preciosCarrito = carrito.map(x => x.precio * x.cantidad)
+const resultado = suma(preciosCarrito)
+console.log(resultado);
+actualizarCarrito(resultado)
+
+}
+
+function actualizarCarrito(resultado){
   localStorage.setItem("carrito", JSON.stringify(carrito));
   $('#contador-carrito').html(carrito.length);
-  $('.total-carrito').html(suma);
+  $('.total-carrito').html(resultado);
 }
 
 function vaciarCarrito(){
@@ -158,20 +191,18 @@ function vaciarCarrito(){
 }
 
 function restarTotalCarrito(){
-  for (let i = 0; i < carrito.length; i++) {
-   suma -= carrito[i].precio; 
-   return
-  }
+  const suma = (ns) => {
+    let acumulado = 0;
+    for (let i = 0; i < ns.length; i++) {
+      acumulado +=ns[i];
+    }
+    return acumulado
+    }
+  const preciosCarrito = carrito.map(x => x.precio)
+  const resultado = suma(preciosCarrito)
+  console.log(resultado);
+  actualizarCarrito(resultado)
 }
-function sumarTotalCarrito(precio){
-  /* esta funcion solo suma,no actualiza el valor total */
-     for (let i = 0; i < carrito.length; i++) {
-      suma += precio  
-      console.log ( 'total '+ suma );
-      actualizarCarrito();
-} 
-}
-
 
 function formCompra() {
  let precioTotal = Number($('#total-compra').text());
@@ -186,9 +217,6 @@ function formCompra() {
  
   
 } 
-
-
-
 
 
 function multiplicarIput(cantidad, precio){
@@ -225,4 +253,7 @@ function validacionIndexOf(producto){
    
    console.log(carrito.indexOf(producto))
 }
+
+
+})
  
