@@ -32,7 +32,13 @@ body {
             div.descripcion-productos{
                 
                 div.productos-contador{
+                    .img-carrito{
+                        background-color: $color1;
+                        color: $color2;
+                        width: 30px;
+                    }
                     b#contador-carrito{
+                        font-family: $font-parrafos;
                         color:$color2;
                     }      
                 }
@@ -76,7 +82,7 @@ body {
                 
                 }
                 
-                .shoppingCartItemsContainer{
+                .localStorage-nav{
                     
                     .shoppingCartItem{
                         display: flex;
@@ -88,6 +94,9 @@ body {
                                 display:none;
                                 
                             }
+                        }
+                        .cantidad-producto{
+                            width: 20px;
                         }
                         p{
                             font-family: $font-parrafos;
@@ -108,7 +117,8 @@ body {
                         }
                         button{
                             font-family: $font-parrafos;
-                            height: 35px;
+                            font-size: 15px;
+                            height: auto;
                             
                         }
                     }

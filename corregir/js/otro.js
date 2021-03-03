@@ -1,5 +1,4 @@
 
-
 // llamar datos desde base de datos conJQuery 
  $.get('/ejemplo.json', function(datos, estado){
 console.log(datos);

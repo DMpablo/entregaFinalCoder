@@ -4,7 +4,7 @@ let carrito = [];
 let nombres = [];
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
-//$('.continnuarCompra').hide();
+$('.continnuarCompra').hide();
 $('.continuar-compra').click(formCompra);
 $(".descripcion-productos").click(menuNav); 
 $('.limpiar-carrito').click(vaciarCarrito);
@@ -33,11 +33,11 @@ fetch("./baseDeDatos.json")
      element.innerHTML += `
          <div class="col-lg-3 col-md-4 m-4 p-3">
          <div class="item card-100">
-         <h3 class="item-title card-title">${baseDeDatos[i].title}</h3>
+         <h3 class="item-title card-title">${baseDeDatos[i].nombre}</h3>
          <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
          <div class="card-body row">
-         <h4 class="card-text">${baseDeDatos[i].description}</h4>
-         <h3 class="item-price text-danger">${baseDeDatos[i].unit_price}</h3>
+         <h4 class="card-text">${baseDeDatos[i].condimentos}</h4>
+         <h3 class="item-price text-danger">${baseDeDatos[i].precio}</h3>
             <button class="btn btn-danger">Agregar al carrito
             <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
             </div>
@@ -53,23 +53,23 @@ fetch("./baseDeDatos.json")
               
             })}}})  
             
-function crearProducto(event){   
-  const button = event.target;
-  const item = button.closest('.item');
-  const itemTitle = item.querySelector('.item-title').textContent;
-  const itemPrice = item.querySelector('.item-price').textContent;
-  const itemImage = item.querySelector('.item-imagen').src;
-  let producto = new Producto(
-    itemTitle,
-    Number(itemPrice),
-    itemImage,
-    1
-    )  
-    carrito.push(producto)
-    posicionProducto = carrito.indexOf(producto);
-    alertaAgregado()
-    actualizarCarrito()
-    crearProductosEnNavLS(posicionProducto, producto)
+            function crearProducto(event){   
+              const button = event.target;
+              const item = button.closest('.item');
+              const itemTitle = item.querySelector('.item-title').textContent;
+              let itemPrice = item.querySelector('.item-price').textContent;
+              const itemImage = item.querySelector('.item-imagen').src;
+              let producto = new Producto(
+                itemTitle,
+                Number(itemPrice),
+                itemImage,
+                1
+                )  
+                carrito.push(producto)
+                posicionProducto = carrito.indexOf(producto);
+                alertaAgregado()
+                actualizarCarrito()
+                crearProductosEnNavLS(posicionProducto, producto)
                 
 }   
 /* if(localStorage.getItem('carrito') != null){    
@@ -99,11 +99,9 @@ function crearProducto(event){
   
   function crearProductosEnNavLS(posicionProducto, producto){
     carrito = JSON.parse ( localStorage.getItem( "carrito" ) );
-    let productosNav
-    //let counter = 0;
+    
     for (let i = 0; i < carrito.length; i++) {
-      //counter += carrito[i].precio
-      productosNav +=  `
+      $('.localStorage-nav').append( `
       <div class="shoppingCartItem shopping-cart-quantity">
       <img src="${carrito[i].imagen}" class="shopping-cart-img m-2" alt="">
       <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
@@ -112,32 +110,29 @@ function crearProducto(event){
       <button class="btn btn-danger button-suma m-2">+</button>
       <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">1</p>
       <button class="btn btn-danger button-resta m-2">-</button>
-
+      
       <button class="btn btn-danger buttonDelete m-2">X</button>
       </div>
-      `
-    }    
-    $('.localStorage-nav').html(productosNav)
-    let cantidadProducto = Number($('.cantidad-producto').text());
-    
-    $('.button-suma').click(()=> { 
-        cantidadProducto += 1;
-        $('.cantidad-producto').html(cantidadProducto); 
-        carrito[posicionProducto].cantidad += 1;
-        suma2()
-      })
-    $('.button-resta').click(()=> { 
-        cantidadProducto -= 1;
-        $('.cantidad-producto').html(cantidadProducto); 
-        carrito[posicionProducto].cantidad -= 1;
-        suma2()
-      })
-      
-      $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto));
+      `) 
+      let cantidadProducto = Number($('.cantidad-producto').text());
+      //$('.localStorage-nav').append(elementos);
+      $('.button-suma').click(()=> { 
+          cantidadProducto += 1;
+          $('.cantidad-producto').html(cantidadProducto); 
+          carrito[i].cantidad += 1;
+          suma2()
+        })
+          $('.button-resta').click(()=> { 
+            cantidadProducto -= 1;
+            $('.cantidad-producto').html(cantidadProducto); 
+            carrito[i].cantidad -= 1;
+            suma2()
+        })
+      $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto, producto));
+        }
+      }
 
-  }
-  
-  
+
 
 
   function removeItemShoppingCart(event, posicionProducto){
@@ -191,7 +186,7 @@ function vaciarCarrito(){
   localStorage.clear()
   
   $('.shoppingCartItem').remove();
-  //$('.continnuarCompra').hide(500);
+  $('.continnuarCompra').hide(500);
   $('.alertas').html('Vaciado con exito')
   $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)
@@ -231,29 +226,24 @@ function formCompra() {
 // Implementar mercadopago para generar un link de pago
 $('.finalizar-compra').click(() => {
   console.log('algo intenta, pero no anda');
+  console.log(carrito);
 $.ajax({
   url: 'https://api.mercadopago.com/checkout/preferences',
-  type: 'POST',
+  type: 'post',
   data: {
-    "items": [
-      {
-      "title": "Combo WHOPPER",
-      "description": "Carne a la parrilla, pan, mayonesa, ketchup, cebolla, tomate, pepinos y lechuga, papas regulares y gaseosa 500ml.",
-      "quantity": 1,
-      "currency_id": "$ARS",
-      "unit_price": 550
-      }
-  ]
+    "items": carrito
   },
   headers: {
     'content-type':'application/json',   
-    'Authorization': 'Bearer APP_USR-5900238552408376-022601-c1d39df394012a8a75043de92a56ec45-27112546' 
+    'Authorization': 'Bearer TEST-5900238552408376-022601-a2734d086c07642a6cc29ce88a11e16b-27112546'  // Agrega tu access token de mercadopago en ACCESS_TOKEN_ENV
   },
   success: function (data, status) {
       console.info(data);
       console.log(status);
   }
 });
+
+
 })
 
 

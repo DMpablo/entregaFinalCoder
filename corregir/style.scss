@@ -1,0 +1,209 @@
+$color1: rgb(211, 65, 65);
+$color2: rgb(252, 252, 252);
+$color3: rgba(36, 3, 3, 0.425);
+$colorParrafos: rgb(131, 131, 131);
+$colorTitulos:rgb(49, 47, 47);
+$breakpoint-tablet: 429px;
+$font-titulos:'Mulish', sans-serif;
+$font-parrafos: 'Lato', sans-serif;
+
+body {
+    margin: 0;
+    padding: 0;
+    nav.navbar{
+        height: auto;       
+        padding: 0px;
+        /* margin-bottom: 60px; */
+        div.container-fluid{
+            background-color: $color1;
+            padding-top: 25px;
+            margin-bottom:80px 0;
+            p{
+                font-size: 20px;
+                font-family: $font-parrafos;
+                color:$color2;
+                text-decoration:none;
+                @media (max-width: $breakpoint-tablet){
+                    font-family: $font-parrafos;
+                    color:$color2;
+                    text-decoration:none;
+                }
+            }
+            div.descripcion-productos{
+                
+                div.productos-contador{
+                    .img-carrito{
+                        background-color: $color1;
+                        color: $color2;
+                        width: 30px;
+                    }
+                    b#contador-carrito{
+                        font-family: $font-parrafos;
+                        color:$color2;
+                    }      
+                }
+                .icon-menu{
+                    margin-left: 15px;
+                    height: 3em;
+                }
+            
+            
+            }
+        
+                
+        }       
+    }
+    p.alertas{
+        position: absolute;
+        left: 80%;
+        top: 90%;
+        width: 200px;
+        padding: 2px;
+        border-radius: 2px;
+        color: $colorParrafos;
+        font-size: $font-titulos;
+        box-shadow: 0px 0px 15px $color3;   
+        @media (max-width: $breakpoint-tablet){
+            left: 40vh;
+            top: 80vh;
+            
+        }
+    }
+    #scroll{
+            background-color: $color3;  
+            height: 60vh;
+            overflow-y:auto;    
+        
+            .container{
+                h2{
+                    font-family: $font-titulos;
+                    margin: 20px 10px;
+                    color: $color2;
+                
+                }
+                
+                .localStorage-nav{
+                    
+                    .shoppingCartItem{
+                        display: flex;
+                        justify-content: center;
+                        img{
+                            border-radius: 12%;
+                            width: 10vh;
+                            @media (max-width: $breakpoint-tablet){
+                                display:none;
+                                
+                            }
+                        }
+                        .cantidad-producto{
+                            width: 20px;
+                        }
+                        p{
+                            font-family: $font-parrafos;
+                            width: 130px;
+                            font-size: 15px;
+                            color: color2;
+                        }
+                        .item-price{
+                            width: 30px;
+                        }
+                        input{
+                            font-family: $font-parrafos;
+                            color:  $colorTitulos;
+                            height: 25px;
+                            width: 20%;
+                            border-radius: 10px;
+                            margin-top: 10px;
+                        }
+                        button{
+                            font-family: $font-parrafos;
+                            font-size: 15px;
+                            height: auto;
+                            
+                        }
+                    }
+                    .shoppingCartItem:hover{
+                        border-radius: 10px;
+                        background-color: rgba(0, 0, 0, 0.514);
+                    }
+                }
+            }
+            div {
+
+                .contenedor-vaciar-carrito{
+                    .vaciar{
+                        font-family: $font-parrafos;
+                        font-size: 15px;
+                        margin-right: 20px;
+                       
+                        button.limpiar-carrito{
+                            width: 40px;
+                            height: 80px;
+                            }
+                    }
+
+
+                }
+                h2{
+                    font-family: $font-titulos;
+                    color: $color2;
+                }
+                p{
+                    font-family: $font-parrafos;
+                    color: $color2;
+                }
+
+            }
+            .contenedor-comprar{
+                button.continuar-compra{
+                    margin-bottom: 10px;
+                }
+            }
+            
+        }
+
+    h2.titulo{
+    font-family: $font-titulos;
+    margin-top: 120px;
+    color: $colorTitulos;
+    }
+    #galeria{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        div{            
+            .item{
+                border-radius: 2px;
+                padding: 5px 2px 0px;
+                .item-title{
+                    font-family: $font-titulos;
+                    color: $colorTitulos;
+                    margin: 2px 3px;
+                    font-size: 15px;
+                }
+                div{
+                    .card-text{
+                        font-family: $font-parrafos;
+                        color: $colorParrafos;
+                        font-size: 14px;
+                    }
+                    div{
+                        button.btn{
+                            font-family: $font-parrafos;
+                            color: $color1;
+                        }
+                    }
+                }
+
+            }
+            .item:hover{
+                box-shadow: 0px 5px 10px $color3;   
+                .card-text{
+                    color: $colorTitulos;
+
+                }
+            }
+        }        
+    }
+    
+}     
