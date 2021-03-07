@@ -58,7 +58,7 @@ body {
         left: 80%;
         top: 90%;
         width: 200px;
-        padding: 2px;
+        padding: 0px;
         border-radius: 2px;
         color: $colorParrafos;
         font-size: $font-titulos;
@@ -86,7 +86,9 @@ body {
                     
                     .shoppingCartItem{
                         display: flex;
+                        max-height: 60px;
                         justify-content: center;
+                        margin: 5px 0px;
                         img{
                             border-radius: 12%;
                             width: 10vh;
@@ -160,13 +162,14 @@ body {
                 }
             }
             
-        }
+    }
 
     h2.titulo{
     font-family: $font-titulos;
     margin-top: 120px;
     color: $colorTitulos;
     }
+ 
     #galeria{
         width: 100%;
         display: flex;
@@ -180,6 +183,16 @@ body {
                     color: $colorTitulos;
                     margin: 2px 3px;
                     font-size: 15px;
+                }   
+                .id-producto{
+                    width: 30px;
+                    margin-left: 85%;
+                    margin-top: 5px;
+                    text-align: center;
+                    font-family: $font-titulos;
+                    color: $colorTitulos;
+                    border-radius: 50%;
+                    border: solid 1px ;
                 }
                 div{
                     .card-text{

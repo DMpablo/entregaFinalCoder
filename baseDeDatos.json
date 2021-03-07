@@ -6,7 +6,8 @@
        "currency_id": "$ARS",
         "unit_price" :550,
         "imagen":"https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150" ,
-        "stock": 20
+        "stock": 20,
+        "id": 1
     },
     {
         "title" : "Combo BK Stacker Triple",
@@ -15,7 +16,8 @@
         "currency_id": "$ARS",
         "unit_price" :650,
         "imagen":"https://images.deliveryhero.io/image/pedidosya/products/471535-bfa46f92-8844-4c0b-bc9c-df76e2dc2dc4.jpg?quality=80&width=200&height=150" ,
-        "stock": 13
+        "stock": 13,
+        "id": 2
     },
     {
         "title" : "Combo Doble Stacker Crispy",
@@ -24,7 +26,8 @@
         "currency_id": "$ARS",
         "unit_price" : 560,
         "imagen":"https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150" ,
-        "stock": 10
+        "stock": 10,
+        "id": 3
     }
     
 ]
