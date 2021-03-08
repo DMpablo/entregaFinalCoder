@@ -1,6 +1,7 @@
 $(async function () {
   
-let carrito = []; 
+  let carrito = []; 
+  let productosNav = []
 
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
@@ -11,8 +12,13 @@ $('.limpiar-carrito').click(vaciarCarrito);
 
 if (localStorage.getItem('carrito') != null) { 
   carrito = JSON.parse ( localStorage.getItem( "carrito" ) 
- 
+  
   );}
+if (localStorage.getItem('carrito') != null) {
+  console.log(carrito);
+  crearProductosEnNavLS() 
+  //actualizarCarrito()
+}
 
 // constructor de productos
 class Producto {
@@ -91,30 +97,30 @@ function crearProducto(event){
     crearProductosEnNavLS(producto)
   }
   
-
-
 }     
 
 function crearProductosEnNavLS(producto){
-  let productosNav = []
   let posicionProducto = carrito.indexOf(producto); 
     //carrito.length
-    productosNav +=  `
-    <div class="shoppingCartItem shopping-cart-quantity">
+
+    carrito.forEach(function(producto){
+      productosNav += `
+      <div class="shoppingCartItem shopping-cart-quantity">
       <p class="id-producto"> ${producto.id}</p>
       <img src="${producto.imagen}" class="shopping-cart-img m-2" alt="">
       <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${producto.nombre}</p>
       <p class="item-price mb-0 shoppingCartItemPrice m-2">${producto.precio}</p>  
       
       <button class="btn btn-danger button-suma m-2">+</button>
-      <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${carrito[posicionProducto].cantidad}</p>
+      <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${ producto.cantidad}</p>
       <button class="btn btn-danger button-resta m-2">-</button>
       
       <button class="btn btn-danger buttonDelete m-2">X</button>
       </div>
-      `  
-      $('.localStorage-nav').append(productosNav)    
-
+      `
+    } 
+    )  
+    $('.localStorage-nav').html(productosNav)    
       //resta
       $('.button-resta').click((event)=> { 
         let button = event.target
