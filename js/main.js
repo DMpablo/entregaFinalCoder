@@ -9,7 +9,10 @@ $('.continuar-compra').click(formCompra);
 $(".descripcion-productos").click(menuNav); 
 $('.limpiar-carrito').click(vaciarCarrito);
 
-if (localStorage.getItem('carrito') != null) {carrito = JSON.parse ( localStorage.getItem( "carrito" ) );}
+if (localStorage.getItem('carrito') != null) {
+  carrito = JSON.parse ( localStorage.getItem( "carrito" ) );
+  
+}
 
 // constructor de productos
 class Producto {
@@ -63,19 +66,38 @@ function crearProducto(event){
   const itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-imagen').src;
   
-  let producto = new Producto( itemId, itemTitle, Number(itemPrice), itemImage, 1 )  
-  carrito.push(producto)
-  alertaAgregado()
-  actualizarCarrito()
-  crearProductosEnNavLS(producto)
+  let producto = new Producto( itemId, itemTitle, Number(itemPrice), itemImage, 1 ) 
+  //console.log(carrito.indexOf(producto.id));
+  let posicionProducto = carrito.indexOf(producto); 
+  
+  if (localStorage.getItem('carrito') == null) {
+    carrito.push(producto)
+    alertaAgregado()
+    actualizarCarrito()
+    crearProductosEnNavLS(producto)
+  }  else if (carrito.find(elemento => elemento.id == producto.id )) {
+    console.log('ya esta en carrito'); 
+    carrito.cantidad += 1;
+    actualizarCarrito()
+    $('.cantidad-producto').text(producto.cantidad);
+    
+  } else if(carrito.find(elemento => elemento.id != producto.id )) {
+    carrito.push(producto)
+    alertaAgregado()
+    actualizarCarrito()
+    crearProductosEnNavLS(producto)
+  }
+  
+  //let validacion = carrito.find(elemento => elemento.id == producto.id )
+  //console.log(validacion);
+
+
 }     
 
 function crearProductosEnNavLS(producto){
-    let posicionProducto = carrito.indexOf(producto); 
-    console.log(posicionProducto);
-    let productosNav = []
-    let counter = 0;
-    carrito.length
+  let productosNav = []
+  let posicionProducto = carrito.indexOf(producto); 
+    //carrito.length
     productosNav +=  `
     <div class="shoppingCartItem shopping-cart-quantity">
     <p>Item ${producto.id}</p>
@@ -90,9 +112,9 @@ function crearProductosEnNavLS(producto){
       <button class="btn btn-danger buttonDelete m-2">X</button>
       </div>
       `  
-      //let cuantasUnidades = Number($('.cantidad-producto').text());
       $('.localStorage-nav').append(productosNav)    
 
+      //resta
       $('.button-resta').click((e)=> { 
         let imputCantidad = event.target
         let parrafoCantidad = imputCantidad.previousElementSibling;
@@ -100,7 +122,7 @@ function crearProductosEnNavLS(producto){
         parrafoCantidad.textContent = carrito[posicionProducto].cantidad -= 1; 
         suma2()
       })
-      
+      //agrega
       $('.button-suma').click((e) => {
         let imputCantidad = event.target
         let parrafoCantidad = imputCantidad.nextElementSibling;
@@ -108,11 +130,18 @@ function crearProductosEnNavLS(producto){
         parrafoCantidad.textContent = carrito[posicionProducto].cantidad += 1; 
         suma2()
       });
-
+      //elimina producto
       $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto));
+      
       suma2()
     }
+
+
     
+
+
+
+
 function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
