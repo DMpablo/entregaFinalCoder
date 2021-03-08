@@ -68,7 +68,7 @@ function crearProducto(event){
   
   let producto = new Producto( itemId, itemTitle, Number(itemPrice), itemImage, 1 ) 
   let posicionProducto = carrito.indexOf(producto); 
- 
+
   if (localStorage.getItem('carrito') == null) {
     carrito.push(producto)
     alertaAgregado()
@@ -91,8 +91,6 @@ function crearProducto(event){
     crearProductosEnNavLS(producto)
   }
   
-  //let validacion = carrito.find(elemento => elemento.id == producto.id )
-  //console.log(validacion);
 
 
 }     
@@ -103,7 +101,7 @@ function crearProductosEnNavLS(producto){
     //carrito.length
     productosNav +=  `
     <div class="shoppingCartItem shopping-cart-quantity">
-    <p>Item ${producto.id}</p>
+      <p class="id-producto"> ${producto.id}</p>
       <img src="${producto.imagen}" class="shopping-cart-img m-2" alt="">
       <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${producto.nombre}</p>
       <p class="item-price mb-0 shoppingCartItemPrice m-2">${producto.precio}</p>  
@@ -118,19 +116,25 @@ function crearProductosEnNavLS(producto){
       $('.localStorage-nav').append(productosNav)    
 
       //resta
-      $('.button-resta').click((e)=> { 
-        let imputCantidad = event.target
-        let parrafoCantidad = imputCantidad.previousElementSibling;
-        console.log(parrafoCantidad.textContent);
-        parrafoCantidad.textContent = carrito[posicionProducto].cantidad -= 1; 
+      $('.button-resta').click((event)=> { 
+        let button = event.target
+        let idProducto = button.parentNode.firstChild.nextSibling.textContent;
+        let nProducto = carrito.find(function(idProducto) {
+          return producto == idProducto; });
+        let parrafoCantidad = button.previousElementSibling;
+
+        parrafoCantidad.textContent = nProducto.cantidad -= 1; 
         suma2()
       })
       //agrega
-      $('.button-suma').click((e) => {
-        let imputCantidad = event.target
-        let parrafoCantidad = imputCantidad.nextElementSibling;
-        console.log(parrafoCantidad.textContent);
-        parrafoCantidad.textContent = carrito[posicionProducto].cantidad += 1; 
+      $('.button-suma').click((event) => {
+        let button = event.target
+        let idProducto = button.parentNode.firstChild.nextSibling.textContent;
+        let nProducto = carrito.find(function(idProducto) {
+          return producto == idProducto; });
+        let parrafoCantidad = button.nextElementSibling;
+
+        parrafoCantidad.textContent = nProducto.cantidad += 1; 
         suma2()
       });
       //elimina producto
@@ -189,8 +193,8 @@ function vaciarCarrito(){
   localStorage.removeItem("carrito"); 
   $('#contador-carrito').html(carrito.length);
   $('.total-carrito').html(0);
-  $('.shoppingCartItem').remove();
 
+  $('.shoppingCartItem').remove();
   //$('.continnuarCompra').hide(500);
   $('.alertas').html('Vaciado con exito')
   $('.alertas').fadeIn(function () {
@@ -227,15 +231,17 @@ function formCompra() {
 } 
 
 
+
+
+// access_token=TEST-5900238552408376-022601-a2734d086c07642a6cc29ce88a11e16b-27112546
 // access_token=APP_USR-5900238552408376-022601-c1d39df394012a8a75043de92a56ec45-27112546
 $('.finalizar-compra').click(() => {
-  console.log('algo intenta, pero no anda');
   $('.alertas').html('compra exitosa!')
   $('.alertas').fadeIn(function () {
   $('.alertas').fadeOut(2000)
   })
  $.ajax({
-  url: 'https://api.mercadopago.com/checkout/preferences?access_token=TEST-5900238552408376-022601-a2734d086c07642a6cc29ce88a11e16b-27112546',
+  url: 'https://api.mercadopago.com/checkout/preferences?access_token=APP_USR-5900238552408376-022601-c1d39df394012a8a75043de92a56ec45-27112546',
   type: 'POST',
   data: JSON.stringify({
       "items": [
@@ -244,7 +250,7 @@ $('.finalizar-compra').click(() => {
             "description": "Carne a la parrilla, pan, mayonesa, ketchup, cebolla, tomate, pepinos y lechuga, papas regulares y gaseosa 500ml.",
             "quantity": 1,
             "currency_id": "ARS",
-            "unit_price": 550.0 
+            "unit_price": 10.0 
           }
       ]
   }),
@@ -259,29 +265,6 @@ $('.finalizar-compra').click(() => {
 
 })
 
-})
 
-
-
-
-/*  for (let i = 0; i < carrito.length; i++) {        
-  //counter += carrito[i].precio
-  productosNav +=  `
-  <div class="shoppingCartItem shopping-cart-quantity">
-  <p>Item ${carrito[i].id}</p>
-      <img src="${carrito[i].imagen}" class="shopping-cart-img m-2" alt="">
-      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
-      <p class="item-price mb-0 shoppingCartItemPrice m-2">${carrito[i].precio}</p>  
-      
-      <button class="btn btn-danger button-suma m-2">+</button>
-      <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${carrito[i].cantidad}</p>
-      <button class="btn btn-danger button-resta m-2">-</button>
-      
-      <button class="btn btn-danger buttonDelete m-2">X</button>
-      </div>
-      `
-      // posisionEnNav = carrito.indexOf(producto)
-      counter += carrito[i].cantidad * carrito[i].precio;
-      
-    }  */     
+}) 
     
