@@ -9,10 +9,10 @@ $('.continuar-compra').click(formCompra);
 $(".descripcion-productos").click(menuNav); 
 $('.limpiar-carrito').click(vaciarCarrito);
 
-if (localStorage.getItem('carrito') != null) {
-  carrito = JSON.parse ( localStorage.getItem( "carrito" ) );
-  
-}
+if (localStorage.getItem('carrito') != null) { 
+  carrito = JSON.parse ( localStorage.getItem( "carrito" ) 
+ 
+  );}
 
 // constructor de productos
 class Producto {
@@ -67,16 +67,19 @@ function crearProducto(event){
   const itemImage = item.querySelector('.item-imagen').src;
   
   let producto = new Producto( itemId, itemTitle, Number(itemPrice), itemImage, 1 ) 
-  //console.log(carrito.indexOf(producto.id));
   let posicionProducto = carrito.indexOf(producto); 
-  
+ 
   if (localStorage.getItem('carrito') == null) {
     carrito.push(producto)
     alertaAgregado()
     actualizarCarrito()
     crearProductosEnNavLS(producto)
   }  else if (carrito.find(elemento => elemento.id == producto.id )) {
-    console.log('ya esta en carrito'); 
+    
+    $('.alertas').html('producto existente en carrito')
+    $('.alertas').fadeIn(function () {
+    $('.alertas').fadeOut(2000)})
+
     carrito.cantidad += 1;
     actualizarCarrito()
     $('.cantidad-producto').text(producto.cantidad);
@@ -134,13 +137,7 @@ function crearProductosEnNavLS(producto){
       $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto));
       
       suma2()
-    }
-
-
-    
-
-
-
+}
 
 function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
@@ -189,14 +186,18 @@ function suma2(ns) {
 function vaciarCarrito(){ 
   suma = 0;
   carrito.length = 0;
-  localStorage.clear()  
+  localStorage.removeItem("carrito"); 
+  $('#contador-carrito').html(carrito.length);
+  $('.total-carrito').html(0);
   $('.shoppingCartItem').remove();
+
   //$('.continnuarCompra').hide(500);
   $('.alertas').html('Vaciado con exito')
   $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)
   })
-  suma2()
+ 
+ 
 }
 
 function restarTotalCarrito(){
