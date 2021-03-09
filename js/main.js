@@ -1,7 +1,7 @@
 $(async function () {
   
   let carrito = []; 
-  let productosNav = []
+  
 
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
@@ -15,7 +15,7 @@ if (localStorage.getItem('carrito') != null) {
   
   );}
 if (localStorage.getItem('carrito') != null) {
-  console.log(carrito);
+ // console.log(carrito);
   crearProductosEnNavLS() 
   //actualizarCarrito()
 }
@@ -99,55 +99,37 @@ function crearProducto(event){
   
 }     
 
+//let posicionProducto = carrito.indexOf(producto); 
+
 function crearProductosEnNavLS(producto){
-  let posicionProducto = carrito.indexOf(producto); 
-    //carrito.length
-
-    carrito.forEach(function(producto){
-      productosNav += `
-      <div class="shoppingCartItem shopping-cart-quantity">
-      <p class="id-producto"> ${producto.id}</p>
-      <img src="${producto.imagen}" class="shopping-cart-img m-2" alt="">
-      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${producto.nombre}</p>
-      <p class="item-price mb-0 shoppingCartItemPrice m-2">${producto.precio}</p>  
+let carritoNav = ``;
+for (let i = 0; i < carrito.length; i++) {    
+  carritoNav += ` 
+  <div class="shoppingCartItem shopping-cart-quantity">
+      <p class="id-producto"> ${carrito[i].id}</p>
+      <img src="${carrito[i].imagen}" class="shopping-cart-img m-2" alt="">
+      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
+      <p class="item-price mb-0 shoppingCartItemPrice m-2">${carrito[i].precio}</p>  
       
-      <button class="btn btn-danger button-suma m-2">+</button>
-      <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${ producto.cantidad}</p>
-      <button class="btn btn-danger button-resta m-2">-</button>
+      <button class="btn btn-danger  m-2" onclick='agregarCantidad(${JSON.stringify(carrito[i])})'> + </button>
+      <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${carrito[i].cantidad}</p>
+      <button class="btn btn-danger m-2" onclick='restarCantidad(${JSON.stringify(carrito[i])})'> - </button>
       
-      <button class="btn btn-danger buttonDelete m-2">X</button>
+      <button class="btn btn-danger buttonDelete m-2 "> X </button>
       </div>
-      `
-    } 
-    )  
-    $('.localStorage-nav').html(productosNav)    
-      //resta
-      $('.button-resta').click((event)=> { 
-        let button = event.target
-        let idProducto = button.parentNode.firstChild.nextSibling.textContent;
-        let nProducto = carrito.find(function(idProducto) {
-          return producto == idProducto; });
-        let parrafoCantidad = button.previousElementSibling;
-
-        parrafoCantidad.textContent = nProducto.cantidad -= 1; 
-        suma2()
-      })
-      //agrega
-      $('.button-suma').click((event) => {
-        let button = event.target
-        let idProducto = button.parentNode.firstChild.nextSibling.textContent;
-        let nProducto = carrito.find(function(idProducto) {
-          return producto == idProducto; });
-        let parrafoCantidad = button.nextElementSibling;
-
-        parrafoCantidad.textContent = nProducto.cantidad += 1; 
-        suma2()
-      });
-      //elimina producto
-      $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto));
-      
-      suma2()
+      `;
+    }
+    $('.localStorage-nav').html(carritoNav)   
+    suma2()
 }
+
+function agregarCantidad() {
+console.log('algo');
+}
+function restarCantidad(){
+  console.log('ago');
+}
+
 
 function removeItemShoppingCart(event, posicionProducto){
   let botonClikeado = event.target
@@ -274,3 +256,32 @@ $('.finalizar-compra').click(() => {
 
 }) 
     
+
+ //resta
+    /*  $('#button-resta').click((event)=> { 
+      let button = event.target
+      console.log(button);
+      let idProducto = button.parentNode.firstChild.nextSibling.textContent;
+      let nProducto = carrito.find(function(idProducto) {
+        return producto == idProducto; });
+      let parrafoCantidad = button.previousElementSibling;
+
+      parrafoCantidad.textContent = nProducto.cantidad -= 1; 
+      suma2()
+    })
+    //agrega
+    $('#button-suma').click((event) => {
+      let button = event.target
+      let idProducto = button.parentNode.firstChild.nextSibling.textContent;
+      let nProducto = carrito.find(function(idProducto) {
+        return producto == idProducto; });
+      let parrafoCantidad = button.nextElementSibling;
+
+      parrafoCantidad.textContent = nProducto.cantidad += 1; 
+      suma2()
+    });
+    //elimina producto
+    $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto));
+  */
+
+ 
