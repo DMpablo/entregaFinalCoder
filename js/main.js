@@ -1,8 +1,5 @@
 $(async function () {
-  
-  let carrito = []; 
-  
-
+let carrito = []; 
 $('.productos-menu').hide();
 $('.productos-titulo').hide();
 $('.continnuarCompra').hide();
@@ -12,14 +9,10 @@ $('.limpiar-carrito').click(vaciarCarrito);
 
 if (localStorage.getItem('carrito') != null) { 
   carrito = JSON.parse ( localStorage.getItem( "carrito" ) 
-  
   );}
 if (localStorage.getItem('carrito') != null) {
- // console.log(carrito);
   crearProductosEnNavLS() 
-  //actualizarCarrito()
 }
-
 // constructor de productos
 class Producto {
   constructor(id, nombreCombo, precioCombo, imagenProducto, cantidadSeleccionada) {
@@ -30,8 +23,6 @@ class Producto {
     this.cantidad = cantidadSeleccionada;
   }
 }
-
-
 //Traigo JSON para hacer las cards 
 fetch("./baseDeDatos.json")
 .then(response => response.json())  
@@ -61,9 +52,8 @@ fetch("./baseDeDatos.json")
             }) 
           }
         }
-      })  
-      
-      
+})  
+         
 function crearProducto(event){   
   const button = event.target;
   const item = button.closest('.item');
@@ -71,38 +61,31 @@ function crearProducto(event){
   const itemTitle = item.querySelector('.item-title').textContent;
   const itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-imagen').src;
-  
   let producto = new Producto( itemId, itemTitle, Number(itemPrice), itemImage, 1 ) 
   let posicionProducto = carrito.indexOf(producto); 
 
   if (localStorage.getItem('carrito') == null) {
     carrito.push(producto)
     alertaAgregado()
-    actualizarCarrito()
+    suma2()
     crearProductosEnNavLS(producto)
-  }  else if (carrito.find(elemento => elemento.id == producto.id )) {
-    
+  }  else if (carrito.find(el => el.id == producto.id )) {
+    let nPoducto = carrito.find(el => el.id == producto.id )
+    $('.cantidad-producto').text(nPoducto.cantidad += 1);
     $('.alertas').html('producto existente en carrito')
     $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)})
-
-    carrito.cantidad += 1;
-    actualizarCarrito()
-    $('.cantidad-producto').text(producto.cantidad);
-    
+    suma2()   
   } else if(carrito.find(elemento => elemento.id != producto.id )) {
     carrito.push(producto)
     alertaAgregado()
-    actualizarCarrito()
-    crearProductosEnNavLS(producto)
-  }
-  
+    suma2()
+    crearProductosEnNavLS()
+  }  
 }     
 
-//let posicionProducto = carrito.indexOf(producto); 
-
-function crearProductosEnNavLS(producto){
-let carritoNav = ``;
+function crearProductosEnNavLS(){
+  let carritoNav = ``;
 for (let i = 0; i < carrito.length; i++) {    
   carritoNav += ` 
   <div class="shoppingCartItem shopping-cart-quantity">
@@ -111,44 +94,48 @@ for (let i = 0; i < carrito.length; i++) {
       <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
       <p class="item-price mb-0 shoppingCartItemPrice m-2">${carrito[i].precio}</p>  
       
-      <button class="btn btn-danger  m-2" onclick='agregarCantidad(${JSON.stringify(carrito[i])})'> + </button>
+      <button class="btn btn-danger  m-2" id="agregarCantidad"> + </button>
       <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${carrito[i].cantidad}</p>
-      <button class="btn btn-danger m-2" onclick='restarCantidad(${JSON.stringify(carrito[i])})'> - </button>
+      <button class="btn btn-danger m-2" id="restarCantidad"> - </button>
       
       <button class="btn btn-danger buttonDelete m-2 "> X </button>
       </div>
       `;
     }
     $('.localStorage-nav').html(carritoNav)   
-    suma2()
+    
+    suma2()    
 }
 
-function agregarCantidad() {
-console.log('algo');
-}
-function restarCantidad(){
-  console.log('ago');
-}
+$('#agregarCantidad').click((event)=>{
+  let button = event.target
+  let idProducto = button.parentNode.firstChild.nextSibling.textContent;
+  let parrafoCantidad = button.nextElementSibling;
+  let nProducto = carrito.find( el => el.id == Number(idProducto));
+  parrafoCantidad.textContent = nProducto.cantidad += 1; 
+  suma2()
+})
 
+$('#restarCantidad').click((event)=> { 
+  let button = event.target
+  let idProducto = button.parentNode.firstChild.nextSibling.textContent;
+  let parrafoCantidad = button.previousElementSibling;
+  let nProducto = carrito.find( el => el.id == Number(idProducto) );
+  parrafoCantidad.textContent = nProducto.cantidad -= 1; 
+  suma2()
+})
 
-function removeItemShoppingCart(event, posicionProducto){
+$('.buttonDelete').click((event, posicionProducto)=>{
   let botonClikeado = event.target
   botonClikeado.closest('.shoppingCartItem').remove();
-    carrito.splice(posicionProducto,1);
+  carrito.splice(posicionProducto,1);
     $('.alertas').html('Producto eliminado')
     $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)
   })
   restarTotalCarrito()
   suma2()
-}
-
-function alertaAgregado() {
-  $('.alertas').html('Producto agregado')
-  $('.alertas').fadeIn(function () {
-    $('.alertas').fadeOut(2000)
-  })
-}
+})
 
 function actualizarCarrito(resultado){
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -166,9 +153,8 @@ function suma2(ns) {
   const suma = (ns) => {
     let acumulado = 0;
     for (let i = 0; i < ns.length; i++) {
-      acumulado += ns[i];
-    }
-    return acumulado
+      acumulado += ns[i]; }
+    return acumulado 
   }
   const preciosCarrito = carrito.map(x => x.precio * x.cantidad)
   const resultado = suma(preciosCarrito)
@@ -202,7 +188,6 @@ function restarTotalCarrito(){
   }
   const preciosCarrito = carrito.map(x => x.precio)
   const resultado = suma(preciosCarrito)
-  console.log(resultado);
   actualizarCarrito(resultado)
 }
 
@@ -218,8 +203,12 @@ function formCompra() {
 }
 } 
 
-
-
+function alertaAgregado() {
+  $('.alertas').html('Producto agregado')
+  $('.alertas').fadeIn(function () {
+  $('.alertas').fadeOut(2000)
+  })
+}
 
 // access_token=TEST-5900238552408376-022601-a2734d086c07642a6cc29ce88a11e16b-27112546
 // access_token=APP_USR-5900238552408376-022601-c1d39df394012a8a75043de92a56ec45-27112546
@@ -250,38 +239,6 @@ $('.finalizar-compra').click(() => {
       console.info(data);
   }
 });
-
 })
-
-
 }) 
     
-
- //resta
-    /*  $('#button-resta').click((event)=> { 
-      let button = event.target
-      console.log(button);
-      let idProducto = button.parentNode.firstChild.nextSibling.textContent;
-      let nProducto = carrito.find(function(idProducto) {
-        return producto == idProducto; });
-      let parrafoCantidad = button.previousElementSibling;
-
-      parrafoCantidad.textContent = nProducto.cantidad -= 1; 
-      suma2()
-    })
-    //agrega
-    $('#button-suma').click((event) => {
-      let button = event.target
-      let idProducto = button.parentNode.firstChild.nextSibling.textContent;
-      let nProducto = carrito.find(function(idProducto) {
-        return producto == idProducto; });
-      let parrafoCantidad = button.nextElementSibling;
-
-      parrafoCantidad.textContent = nProducto.cantidad += 1; 
-      suma2()
-    });
-    //elimina producto
-    $('.buttonDelete').click( (e) => removeItemShoppingCart(e, posicionProducto));
-  */
-
- 
