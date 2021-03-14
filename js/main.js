@@ -7,12 +7,8 @@ $('.continuar-compra').click(formCompra);
 $(".descripcion-productos").click(menuNav); 
 $('.limpiar-carrito').click(vaciarCarrito);
 
-if (localStorage.getItem('carrito') != null) { 
-  carrito = JSON.parse ( localStorage.getItem( "carrito" ) 
-  );}
-if (localStorage.getItem('carrito') != null) {
-  crearProductosEnNavLS() 
-}
+if (localStorage.getItem('carrito') != null) { carrito = JSON.parse ( localStorage.getItem( "carrito" ));}
+if (localStorage.getItem('carrito') != null) { crearProductosEnNavLS()}
 // constructor de productos
 class Producto {
   constructor(id, nombreCombo, precioCombo, imagenProducto, cantidadSeleccionada) {
@@ -67,56 +63,57 @@ function crearProducto(event){
   if (localStorage.getItem('carrito') == null) {
     carrito.push(producto)
     alertaAgregado()
-    suma2()
-    crearProductosEnNavLS(producto)
-  }  else if (carrito.find(el => el.id == producto.id )) {
-    let nPoducto = carrito.find(el => el.id == producto.id )
-    $('.cantidad-producto').text(nPoducto.cantidad += 1);
-    $('.alertas').html('producto existente en carrito')
+    crearProductosEnNavLS(producto)    
+  } else if (carrito.find(el => el.id == producto.id )) {
+    // falta que actualice el nav al agregar uno mas.
+   let nProducto = carrito.find(el => el.id == producto.id )
+   nProducto.cantidad += 1;
+
+    $('.alertas').html('producto existente en carrito');
     $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)})
-    suma2()   
+    crearProductosEnNavLS(nProducto)
+    //suma2()   
   } else if(carrito.find(elemento => elemento.id != producto.id )) {
     carrito.push(producto)
     alertaAgregado()
-    suma2()
-    crearProductosEnNavLS()
-  }  
-}     
+    crearProductosEnNavLS(producto)
+  } 
+}  
+   
 
 function crearProductosEnNavLS(){
   let carritoNav = ``;
 for (let i = 0; i < carrito.length; i++) {    
   carritoNav += ` 
-  <div class="shoppingCartItem shopping-cart-quantity">
+    <div class="shoppingCartItem shopping-cart-quantity">
       <p class="id-producto"> ${carrito[i].id}</p>
       <img src="${carrito[i].imagen}" class="shopping-cart-img m-2" alt="">
-      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
+      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">-${carrito[i].nombre}-</p>
       <p class="item-price mb-0 shoppingCartItemPrice m-2">${carrito[i].precio}</p>  
       
-      <button class="btn btn-danger  m-2" id="agregarCantidad"> + </button>
+      <button class="btn btn-danger  m-2 agregarCantidad"> + </button>
       <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${carrito[i].cantidad}</p>
-      <button class="btn btn-danger m-2" id="restarCantidad"> - </button>
+      <button class="btn btn-danger m-2  restarCantidad" > - </button>
       
       <button class="btn btn-danger buttonDelete m-2 "> X </button>
-      </div>
+    </div>
       `;
     }
-    $('.localStorage-nav').html(carritoNav)   
-    
-    suma2()    
-}
+    $('.localStorage-nav').html(carritoNav)
+   suma2()    
 
-$('#agregarCantidad').click((event)=>{
+$('.agregarCantidad').click((event)=>{
   let button = event.target
   let idProducto = button.parentNode.firstChild.nextSibling.textContent;
   let parrafoCantidad = button.nextElementSibling;
   let nProducto = carrito.find( el => el.id == Number(idProducto));
-  parrafoCantidad.textContent = nProducto.cantidad += 1; 
+  let posicionNproducto = carrito.indexOf(nProducto); 
+  parrafoCantidad.textContent = carrito[posicionNproducto].cantidad += 1; 
   suma2()
 })
 
-$('#restarCantidad').click((event)=> { 
+$('.restarCantidad').click((event)=> { 
   let button = event.target
   let idProducto = button.parentNode.firstChild.nextSibling.textContent;
   let parrafoCantidad = button.previousElementSibling;
@@ -126,16 +123,31 @@ $('#restarCantidad').click((event)=> {
 })
 
 $('.buttonDelete').click((event, posicionProducto)=>{
-  let botonClikeado = event.target
-  botonClikeado.closest('.shoppingCartItem').remove();
-  carrito.splice(posicionProducto,1);
+  if (JSON.parse(localStorage.getItem('carrito')).length <= 1) {
+    console.log(true);    
+   vaciarCarrito()
+    
+  } else {
+    console.log(false);
+    let botonClikeado = event.target
+    botonClikeado.closest('.shoppingCartItem').remove();
+    carrito.splice(posicionProducto,1);
     $('.alertas').html('Producto eliminado')
     $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)
-  })
-  restarTotalCarrito()
-  suma2()
+    })
+    restarTotalCarrito()
+    suma2()
+  }
+
+ 
+    
+    
 })
+
+
+}
+  
 
 function actualizarCarrito(resultado){
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -231,14 +243,8 @@ $('.finalizar-compra').click(() => {
           }
       ]
   }),
-  headers: {
-      'Content-Type': 'application/json',
-      'Authorization': ''
-  },
-  success : function(data){
-      console.info(data);
-  }
+  headers: { 'Content-Type': 'application/json', 'Authorization': '' },
+  success : function(data){ console.info(data); }
 });
 })
-}) 
-    
+})     
