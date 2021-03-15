@@ -58,26 +58,23 @@ function crearProducto(event){
   const itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-imagen').src;
   let producto = new Producto( itemId, itemTitle, Number(itemPrice), itemImage, 1 ) 
-  let posicionProducto = carrito.indexOf(producto); 
 
   if (localStorage.getItem('carrito') == null) {
     carrito.push(producto)
     alertaAgregado()
     crearProductosEnNavLS(producto)    
   } else if (carrito.find(el => el.id == producto.id )) {
-    // falta que actualice el nav al agregar uno mas.
-   let nProducto = carrito.find(el => el.id == producto.id )
-   nProducto.cantidad += 1;
-
-    $('.alertas').html('producto existente en carrito');
-    $('.alertas').fadeIn(function () {
+    let nProducto = carrito.find(el => el.id == producto.id )
+    nProducto.cantidad += 1;
+   $('.alertas').html('producto existente en carrito');
+   $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)})
     crearProductosEnNavLS(nProducto)
     //suma2()   
   } else if(carrito.find(elemento => elemento.id != producto.id )) {
     carrito.push(producto)
     alertaAgregado()
-    crearProductosEnNavLS(producto)
+    crearProductosEnNavLS()
   } 
 }  
    
@@ -89,7 +86,7 @@ for (let i = 0; i < carrito.length; i++) {
     <div class="shoppingCartItem shopping-cart-quantity">
       <p class="id-producto"> ${carrito[i].id}</p>
       <img src="${carrito[i].imagen}" class="shopping-cart-img m-2" alt="">
-      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">-${carrito[i].nombre}-</p>
+      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
       <p class="item-price mb-0 shoppingCartItemPrice m-2">${carrito[i].precio}</p>  
       
       <button class="btn btn-danger  m-2 agregarCantidad"> + </button>
@@ -122,30 +119,26 @@ $('.restarCantidad').click((event)=> {
   suma2()
 })
 
-$('.buttonDelete').click((event, posicionProducto)=>{
+$('.buttonDelete').click((event, )=>{
   if (JSON.parse(localStorage.getItem('carrito')).length <= 1) {
     console.log(true);    
-   vaciarCarrito()
-    
+    vaciarCarrito()
   } else {
-    console.log(false);
     let botonClikeado = event.target
+    let idProducto = botonClikeado.parentNode.firstChild.nextSibling.textContent;
+    let nProducto = carrito.find( el => el.id == Number(idProducto) );
+    let posicionNproducto = carrito.indexOf(nProducto); 
+    console.log(posicionNproducto);
     botonClikeado.closest('.shoppingCartItem').remove();
-    carrito.splice(posicionProducto,1);
+    carrito.splice(posicionNproducto,1);
     $('.alertas').html('Producto eliminado')
     $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)
     })
     restarTotalCarrito()
     suma2()
-  }
-
- 
-    
-    
+  }  
 })
-
-
 }
   
 
