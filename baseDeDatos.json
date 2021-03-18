@@ -16,7 +16,7 @@
         "currency_id": "$ARS",
         "unit_price" :650,
         "imagen":"https://images.deliveryhero.io/image/pedidosya/products/471535-bfa46f92-8844-4c0b-bc9c-df76e2dc2dc4.jpg?quality=80&width=200&height=150" ,
-        "stock": 13,
+        "stock": 333,
         "id": 2
     },
     {
@@ -26,8 +26,71 @@
         "currency_id": "$ARS",
         "unit_price" : 560,
         "imagen":"https://images.deliveryhero.io/image/pedidosya/products/471535-7676e83e-b3d3-486e-b454-20b819a210e3.jpg?quality=80&width=200&height=150" ,
-        "stock": 10,
+        "stock": 130,
         "id": 3
+    },
+    {
+        "title" : "Pizza grande de muzzarella",
+        "description": "+ 2 faina + 2 gaseosas linea Coca Cola 500 ml",
+        "quantity": 0, 
+        "currency_id": "$ARS",
+        "unit_price" : 499,
+        "imagen":"https://images.deliveryhero.io/image/pedidosya/products/2439df91-98cd-4512-b618-f60465329f54.jpg?quality=80&width=200" ,
+        "stock": 130,
+        "id": 4
+    },
+    {
+        "title" : "Pizza grande 4 gustos",
+        "description": "Pizza combinada de 4 sabores (Muzzarella, fugazza, napolitana, jamon y morrones",
+        "quantity": 0, 
+        "currency_id": "$ARS",
+        "unit_price" : 599,
+        "imagen":"https://images.deliveryhero.io/image/pedidosya/products/a1177a37-f0b9-4eb7-8bf0-a1ec899128f2.jpg?quality=80&width=200" ,
+        "stock": 130,
+        "id": 5
+    },
+    {
+        "title" : "Ensalada Caesar",
+        "description": "Base de Lechuga con pollo, queso en tiras, croutones y aderezo caesar.",
+        "quantity": 0, 
+        "currency_id": "$ARS",
+        "unit_price" : 379,
+        "imagen":"https://images.deliveryhero.io/image/pedidosya/products/c5a14164-8b5d-4c7a-a257-ec17fbc2bbf9.jpg?quality=80&width=200" ,
+        "stock": 130,
+        "id": 6
+    },
+
+    {
+        "title" : "Ensalada Fresh Green",
+        "description": "Base de Espinaca, cherry, cebolla morada, pepino, palta, queso en cubos, champiñones y aderezo de la casa.",
+        "quantity": 0, 
+        "currency_id": "$ARS",
+        "unit_price" : 475,
+        "imagen":"https://images.deliveryhero.io/image/pedidosya/products/bdc08c44-3acd-4a99-b699-7cf2ba45bf30.jpg?quality=80&width=500" ,
+        "stock": 130,
+        "id": 7
+    },
+
+    {
+        "title" : "Ensalada Kale Vegan",
+        "description": "Base de Kale, tomate redondo, pepino, zanahoria chips, nueces y salsa de soja.",
+        "quantity": 0, 
+        "currency_id": "$ARS",
+        "unit_price" : 389,
+        "imagen":"https://images.deliveryhero.io/image/pedidosya/products/d1d3e9fb-fcbf-4f3f-a318-1578bd9e0246.jpg?quality=80&width=500" ,
+        "stock": 130,
+        "id": 8
+    },
+
+    {
+        "title" : "Pizza grande 4 gustos + docena de empanadas",
+        "description": "+ 2 cervezas + 2 gaseosas de 500 ml",
+        "quantity": 0, 
+        "currency_id": "$ARS",
+        "unit_price" : 1399,
+        "imagen":"https://images.deliveryhero.io/image/pedidosya/products/d3d2fbba-9275-42d7-a5ec-a6a12e30e0f8.jpg?quality=80&width=500" ,
+        "stock": 130,
+        "id": 9
     }
     
 ]
