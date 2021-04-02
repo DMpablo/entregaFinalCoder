@@ -9,7 +9,6 @@ $('.limpiar-carrito').click(vaciarCarrito);
 
 if (localStorage.getItem('carrito') != null) { carrito = JSON.parse ( localStorage.getItem( "carrito" ));}
 if (localStorage.getItem('carrito') != null) { crearProductosEnNavLS()}
-// constructor de productos
 class Producto {
   constructor(id, nombreCombo, precioCombo, imagenProducto, cantidadSeleccionada) {
     this.id = id;
@@ -19,7 +18,7 @@ class Producto {
     this.cantidad = cantidadSeleccionada;
   }
 }
-//Traigo JSON para hacer las cards 
+ 
 fetch("./baseDeDatos.json")
 .then(response => response.json())  
 .then(baseDeDatos => {
@@ -115,8 +114,11 @@ $('.restarCantidad').click((event)=> {
   let idProducto = button.parentNode.firstChild.nextSibling.textContent;
   let parrafoCantidad = button.previousElementSibling;
   let nProducto = carrito.find( el => el.id == Number(idProducto) );
-  parrafoCantidad.textContent = nProducto.cantidad -= 1; 
-  suma2()
+  if (parrafoCantidad.textContent >= 1 ){
+    parrafoCantidad.textContent = nProducto.cantidad -= 1; 
+    suma2()
+  }
+  
 })
 
 $('.buttonDelete').click((event, )=>{
@@ -205,8 +207,7 @@ function formCompra() {
     $('.alertas').fadeIn(function () {
     $('.alertas').fadeOut(2000)
   })
-}
-} 
+}} 
 
 function alertaAgregado() {
   $('.alertas').html('Producto agregado')
