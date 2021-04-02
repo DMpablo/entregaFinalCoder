@@ -18,37 +18,52 @@ class Producto {
     this.cantidad = cantidadSeleccionada;
   }
 }
- 
+
+let productoBuscado = document.querySelector('#buscardor');
+let resultado = document.querySelector('#galeria')
+
 fetch("./baseDeDatos.json")
 .then(response => response.json())  
-.then(baseDeDatos => {
-  for(let i = 0; i<baseDeDatos.length; i++){
-    if($(".galeria") != null){
-      $(".galeria").innerHTML;        
-      let element = document.getElementById('galeria')
-      element.innerHTML += `
-         <div class="col-lg-3 col-md-4 m-4 p-3">
-         <div class="item card-100">
-         <p class="id-producto">${baseDeDatos[i].id}</p>
-         <h3 class="item-title card-title">${baseDeDatos[i].title}</h3>
-         <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
-         <div class="card-body row">
-         <h4 class="card-text">${baseDeDatos[i].description}</h4>
-         <h3 class="item-price text-danger">${baseDeDatos[i].unit_price}</h3>
-         <button class="btn-creador btn btn-danger">Agregar al carrito
-         <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
-         </div>
-         </div>
-         </div>`;
-         const addToShoppingCartBtn = document.querySelectorAll('.btn-creador');
-         addToShoppingCartBtn.forEach((agregarConClick) => {
-           agregarConClick.addEventListener('click', crearProducto);
-              $('.agregado-carrito').hide()  
+.then(baseDeDatos => {  
+  
+  const filtrar = ()=>{
+    const texto = productoBuscado.value.toLowerCase();
+    resultado.innerHTML = '';
+    for(let i = 0; i<baseDeDatos.length; i++){
+      let nombre = baseDeDatos[i].title.toLowerCase();
+      if (nombre.indexOf(texto) !== -1) {
+       if($(".galeria") != null){
+        $(".galeria").innerHTML;        
+        resultado.innerHTML += `
+           <div class="col-lg-3 col-md-4 m-4 p-3">
+           <div class="item card-100">
+           <p class="id-producto">${baseDeDatos[i].id}</p>
+           <h3 class="item-title card-title">${baseDeDatos[i].title}</h3>
+           <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
+           <div class="card-body row">
+           <h4 class="card-text">${baseDeDatos[i].description}</h4>
+           <h3 class="item-price text-danger">${baseDeDatos[i].unit_price}</h3>
+           <button class="btn-creador btn btn-danger">Agregar al carrito
+           <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
+           </div>
+           </div>
+           </div>`;
+           const addToShoppingCartBtn = document.querySelectorAll('.btn-creador');
+           addToShoppingCartBtn.forEach((agregarConClick) => {
+             agregarConClick.addEventListener('click', crearProducto);
+             $('.agregado-carrito').hide()  
             }) 
-          }
+          }          
         }
-})  
-         
+      }
+    }
+    productoBuscado.addEventListener('keyup', filtrar)
+    filtrar();
+  })
+  
+  
+        
+      
 function crearProducto(event){   
   const button = event.target;
   const item = button.closest('.item');
@@ -118,9 +133,8 @@ $('.restarCantidad').click((event)=> {
     parrafoCantidad.textContent = nProducto.cantidad -= 1; 
     suma2()
   }
-  
 })
-
+ 
 $('.buttonDelete').click((event, )=>{
   if (JSON.parse(localStorage.getItem('carrito')).length <= 1) {
     console.log(true);    
@@ -142,7 +156,6 @@ $('.buttonDelete').click((event, )=>{
   }  
 })
 }
-  
 
 function actualizarCarrito(resultado){
   localStorage.setItem("carrito", JSON.stringify(carrito));
