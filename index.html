@@ -12,17 +12,14 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script type="text/javascript" defer src="./js/main.js"></script>
   </head>
-  <body >
+  <body>
     
     <nav class="navbar fixed-top navbar-danger"> 
     <div class="container-fluid">
       <p class="pedilo-aca">PediloAca!</p>
       <p class="productos-titulo">Productos</p> 
      
-        <div class="d-flex">
-          <input class="form-control me-2" id="buscardor" type="text" placeholder="que estas buscando?" aria-label="Search">
-          <button class=" btn btn-outline-light" id="filtrar-productos">buscar</button>
-        </div>
+      
       
       <div class="descripcion-productos d-flex">
         <div class="productos-contador">
@@ -74,8 +71,14 @@
 
   <p class="alertas bg-warning text-center"></p>
   
-  <h2 class="text-center titulo">Platos recomendados</h2>
   
+    <div class="d-flex w-100 buscador">
+      <input class="form-control me-2 w-25" id="buscardor" type="text" placeholder="Que estas buscando?" aria-label="Search">
+      <img class="search-icon" src="./assets/outline_search_black_24dp.png" alt="">
+    </div>
+
+  
+
   <div class="row align-items-center" id="galeria">
   </div>
 
