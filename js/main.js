@@ -36,17 +36,17 @@ fetch("./baseDeDatos.json")
         $(".galeria").innerHTML;        
         resultado.innerHTML += `
            <div class="col-lg-3 col-md-4 m-4 p-3">
-           <div class="item card-100">
-           <p class="id-producto">${baseDeDatos[i].id}</p>
-           <h3 class="item-title card-title">${baseDeDatos[i].title}</h3>
-           <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
-           <div class="card-body row">
-           <h4 class="card-text">${baseDeDatos[i].description}</h4>
-           <h3 class="item-price text-danger">${baseDeDatos[i].unit_price}</h3>
-           <button class="btn-creador btn btn-danger">Agregar al carrito
-           <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
-           </div>
-           </div>
+            <div class="item card-100">
+              <p class="id-producto">${baseDeDatos[i].id}</p>
+              <h3 class="item-title card-title">${baseDeDatos[i].title}</h3>
+              <img src="${baseDeDatos[i].imagen}" class="item-imagen card-img-top">
+              <div class="card-body row">
+                <h4 class="card-text">${baseDeDatos[i].description}</h4>
+                <h3 class="item-price text-danger">${baseDeDatos[i].unit_price}</h3>
+                <button class="btn-creador btn btn-danger">Agregar al carrito
+                <img class="img-carrito " src="./assets/carrito.svg" alt=""></button>
+              </div>
+            </div>
            </div>`;
            const addToShoppingCartBtn = document.querySelectorAll('.btn-creador');
            addToShoppingCartBtn.forEach((agregarConClick) => {
@@ -97,18 +97,18 @@ function crearProductosEnNavLS(){
   let carritoNav = ``;
 for (let i = 0; i < carrito.length; i++) {    
   carritoNav += ` 
-    <div class="shoppingCartItem shopping-cart-quantity">
+  <div class="shoppingCartItem shopping-cart-quantity">
+    <p class="shopping-cart-item-title shoppingCartItemTitle">${carrito[i].nombre}</p>
+    <div>
       <p class="id-producto"> ${carrito[i].id}</p>
       <img src="${carrito[i].imagen}" class="shopping-cart-img m-2" alt="">
-      <p class="shopping-cart-item-title shoppingCartItemTitle m-2">${carrito[i].nombre}</p>
       <p class="item-price mb-0 shoppingCartItemPrice m-2">${carrito[i].precio}</p>  
-      
       <button class="btn btn-danger  m-2 agregarCantidad"> + </button>
       <p class="cantidad-producto m-2 text-center" type="number" value="1" min="0">${carrito[i].cantidad}</p>
-      <button class="btn btn-danger m-2  restarCantidad" > - </button>
-      
+      <button class="btn btn-danger m-2  restarCantidad" > - </button>      
       <button class="btn btn-danger buttonDelete m-2 "> X </button>
-    </div>
+    </div>      
+  </div>
       `;
     }
     $('.localStorage-nav').html(carritoNav)

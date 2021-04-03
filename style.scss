@@ -1,18 +1,23 @@
 $color1: rgb(211, 65, 65);
 $color2: rgb(252, 252, 252);
 $color3: rgba(39, 39, 39, 0.959);
+$color-shadow:rgba(155, 154, 154, 0.623);
 $colorParrafos: rgb(131, 131, 131);
 $colorTitulos:rgb(49, 47, 47);
 $breakpoint-tablet: 429px;
 $font-titulos:'Mulish', sans-serif;
 $font-parrafos: 'Lato', sans-serif;
 
+*.row{
+    --bs-gutter-x: 0;  
+}
 body {
     margin: 0;
     padding: 0;
     nav.navbar{
         height: auto;       
         padding: 0px;
+        box-shadow: 0px 5px 10px $color-shadow; 
         /* margin-bottom: 60px; */
         div.container-fluid{
             background-color: $color1;
@@ -29,7 +34,20 @@ body {
                     text-decoration:none;
                 }
             }
-            
+            p.alertas{
+                position: absolute;
+                left: 80%;
+                top: 90%;
+                width: 200px;
+                padding: 0px;
+                
+                color: rgb(75, 71, 71);
+                font-size: 14px;
+                box-shadow: 0px 0px 15px $color3;   
+                @media (max-width: $breakpoint-tablet){
+                    left: 25vh;                                
+                }
+            }
             div.descripcion-productos{
                 
                 div.productos-contador{
@@ -50,46 +68,32 @@ body {
             
             
             }
-        
-                
         }       
-    }
-    p.alertas{
-        position: absolute;
-        left: 80%;
-        top: 90%;
-        width: 200px;
-        padding: 0px;
-        border-radius: 2px;
-        color: $colorParrafos;
-        font-size: $font-titulos;
-        box-shadow: 0px 0px 15px $color3;   
-        @media (max-width: $breakpoint-tablet){
-            left: 40vh;
-            top: 80vh;
-            
-        }
     }
     #scroll{
             background-color: $color3;  
             height: 60vh;
             overflow-y:auto;    
-        
             .container{
                 h2{
                     font-family: $font-titulos;
                     margin: 20px 10px;
                     color: $color2;
                 }
-                
                 .localStorage-nav{
                     
                     .shoppingCartItem{
-                        display: flex;
-                        max-height: 60px;
-                        justify-content: center;
-                        margin: 5px 0px;
-                        img{
+                        display: block;
+                        .shoppingCartItemTitle{
+                            margin-bottom: -4px; 
+                            margin-left: 10vw;
+                        }
+                        div{
+                            display: flex;
+                            height: auto;
+                            justify-content: center;
+                            margin: 0px 0px 20px;
+                             img{
                             border-radius: 12%;
                             width: 10vh;
                             @media (max-width: $breakpoint-tablet){
@@ -100,10 +104,14 @@ body {
                         .cantidad-producto{
                             width: 20px;
                         }
+                        .id-producto{
+                            visibility: hidden;
+                            width: 0px;
+                        }
                         p{
                             font-family: $font-parrafos;
-                            width: 130px;
-                            font-size: 15px;
+                            width: 80px;
+                            font-size: 12px;
                             color: color2;
                         }
                         .item-price{
@@ -120,18 +128,19 @@ body {
                         button{
                             font-family: $font-parrafos;
                             font-size: 15px;
-                            height: auto;
+                            height: 40px;
                             
                         }
+                        }
+                       
                     }
                     .shoppingCartItem:hover{
-                        border-radius: 10px;
+                        border-radius: 0px;
                         background-color: rgba(0, 0, 0, 0.514);
                     }
                 }
             }
             div {
-
                 .contenedor-vaciar-carrito{
                     .vaciar{
                         font-family: $font-parrafos;
@@ -143,9 +152,8 @@ body {
                             height: 80px;
                             }
                     }
-
-
                 }
+                
                 h2{
                     font-family: $font-titulos;
                     color: $color2;
@@ -161,21 +169,36 @@ body {
                     margin-bottom: 10px;
                 }
             }
-            
+            .continnuarCompra{
+                .finalizar-compra{
+                    a{
+                        color: $color2;
+                    }
+
+                }
+            }
     }
+
     .buscador{
         width: 100%;
         display: flex;
         justify-content: center;
         margin-top: 120px;
         height: 30px;
-        
+        input{
+            box-shadow: 0px 7px 10px $color-shadow; 
+            width: 40%;
+            @media (max-width: $breakpoint-tablet){
+                width: 80%;            
+            }
+        }
     }
     #galeria{
         width: 100%;
         display: flex;
         justify-content: center;
-        div{            
+        div{          
+            
             .item{
                 border-radius: 2px;
                 padding: 5px 2px 0px;
@@ -212,7 +235,7 @@ body {
 
             }
             .item:hover{
-                box-shadow: 0px 5px 10px $color3;   
+                box-shadow: 0px 5px 10px $color-shadow;   
                 .card-text{
                     color: $colorTitulos;
 
